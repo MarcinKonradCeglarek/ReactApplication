@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "react-cli-planning-poker-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
