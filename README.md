@@ -11,6 +11,12 @@
 
 - yarn add @material-ui/core
 
-## Adding typescript support to existing application:
+## Adding typescript support to existing application (https://create-react-app.dev/docs/adding-typescript/)
 
 - yarn add typescript @types/node @types/react @types/react-dom @types/jest
+- rename App.js => App.tsx
+- restart development server
+
+## Addint TSLint (https://palantir.github.io/tslint/)
+
+yarn global add tslint typescript
