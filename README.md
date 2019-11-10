@@ -29,9 +29,13 @@
 
     npx -p @storybook/cli sb init --type react
 
+#### Storybook state https://github.com/dump247/storybook-state
+
+    yarn add @dump247/storybook-state
+
 ### Classnames: https://www.npmjs.com/package/classnames
 
     yarn add classnames
-    yarn add @types/classnames (I'm not sure if this one)
+    yarn add @types/classnames (not required, but there are warnings if you don't do this)
 
 **Notes**: https://stackoverflow.com/questions/53111195/typescript-with-classnames-no-index-signature

@@ -15,7 +15,8 @@ const styles = (theme: Theme) =>
       backgroundColor: purple[500],
       border: "8px solid " + theme.palette.common.white,
       borderRadius: theme.shape.borderRadius,
-      cursor: "pointer"
+      cursor: "pointer",
+      margin: "5px"
     },
     normal: {
       width: "150px",
@@ -30,14 +31,18 @@ const styles = (theme: Theme) =>
     }
   });
 
-export interface Props extends WithStyles<typeof styles, true> {
+export interface CardProps extends WithStyles<typeof styles, true> {
   Color: string;
   Value: number;
   IsSelected: boolean;
-  onClick: () => void;
+  onClick: (value: number) => void;
 }
 
-class Card extends React.PureComponent<Props> {
+class Card extends React.PureComponent<CardProps> {
+  handleClick = () => {
+    this.props.onClick(this.props.Value);
+  };
+
   render() {
     const classes = this.props.classes;
     var wrapperClasses = classNames({
@@ -45,9 +50,9 @@ class Card extends React.PureComponent<Props> {
       [classes.selected]: this.props.IsSelected,
       [classes.normal]: !this.props.IsSelected
     });
-    
+
     return (
-      <div className={wrapperClasses} onClick={this.props.onClick}>
+      <div className={wrapperClasses} onClick={this.handleClick}>
         <span className={this.props.classes.value}>{this.props.Value}</span>
       </div>
     );
