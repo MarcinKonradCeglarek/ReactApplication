@@ -15,14 +15,19 @@ interface CardsProps {
 }
 
 storiesOf("Cards", module)
-  .add("Single card 3", () => (
-    <Card
-      Value={3}
-      Color={"blue"}
-      IsSelected={false}
-      onClick={action("clicked")}
-    />
-  ))
+  .add(
+    "Single card 3",
+    withState({ IsSelected: false })(({ store }) => (
+      <Card
+        Value={3}
+        IsSelected={store.state.IsSelected}
+        onClick={() => {
+          store.set({ IsSelected: !store.state.IsSelected });
+          action("clicked");
+        }}
+      />
+    ))
+  )
   .add(
     "Multiple values with store",
     withState<CardsProps>({ SelectedValue: null })(({ store }) => (

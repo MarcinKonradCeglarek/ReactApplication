@@ -28,7 +28,6 @@ class Cards extends React.Component<CardsProps> {
           <Card
             key={`Card_${n}`}
             Value={n}
-            Color={"none"}
             onClick={this.handleCardSelection.bind(this)}
             IsSelected={this.props.SelectedValue === n}
           />

@@ -10,13 +10,13 @@ const styles = (theme: Theme) =>
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-
       color: theme.palette.common.white,
       backgroundColor: purple[500],
       border: "8px solid " + theme.palette.common.white,
       borderRadius: theme.shape.borderRadius,
       cursor: "pointer",
-      margin: "5px"
+      margin: "5px",
+      transition: "width 0.3s, height 0.3s"
     },
     normal: {
       width: "150px",
@@ -32,7 +32,6 @@ const styles = (theme: Theme) =>
   });
 
 export interface CardProps extends WithStyles<typeof styles, true> {
-  Color: string;
   Value: number;
   IsSelected: boolean;
   onClick: (value: number) => void;
