@@ -29,9 +29,13 @@
 
     npx -p @storybook/cli sb init --type react
 
+#### Configuring storybook to use typescript: https://storybook.js.org/docs/configurations/typescript-config/
+
+    yarn add -D typescript awesome-typescript-loader @storybook/addon-info react-docgen-typescript-loader jest "@types/jest" ts-jest
+
 #### Storybook state https://github.com/dump247/storybook-state
 
-    yarn add @dump247/storybook-state
+    yarn add -D @dump247/storybook-state
 
 ### Classnames: https://www.npmjs.com/package/classnames
 

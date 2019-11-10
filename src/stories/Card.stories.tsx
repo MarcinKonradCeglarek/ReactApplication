@@ -10,6 +10,10 @@ export default {
   title: "Card"
 };
 
+interface CardsProps {
+  SelectedValue: number | null;
+}
+
 storiesOf("Cards", module)
   .add("Single card 3", () => (
     <Card
@@ -21,7 +25,7 @@ storiesOf("Cards", module)
   ))
   .add(
     "Multiple values with store",
-    withState({ SelectedValue: null })(({ store }) => (
+    withState<CardsProps>({ SelectedValue: null })(({ store }) => (
       <Cards
         SelectedValue={store.state.SelectedValue}
         onSelect={value => store.set({ SelectedValue: value })}
