@@ -37,6 +37,12 @@
 
     yarn add -D @dump247/storybook-state
 
+- Add import '@storybook/addon-knobs/register'; to addons.js
+
+#### Storybook knobs https://github.com/storybookjs/storybook/tree/master/addons/knobs
+
+    yarn add @storybook/addon-knobs --dev
+
 ### Classnames: https://www.npmjs.com/package/classnames
 
     yarn add classnames

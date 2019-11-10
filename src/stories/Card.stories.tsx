@@ -6,10 +6,6 @@ import Card from "../Components/Card";
 import Cards from "../Components/Cards";
 import { action } from "@storybook/addon-actions";
 
-export default {
-  title: "Card"
-};
-
 interface CardsProps {
   SelectedValue: number | null;
 }
