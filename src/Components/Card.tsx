@@ -16,13 +16,14 @@ const styles = (theme: Theme) =>
       borderRadius: theme.shape.borderRadius,
       cursor: "pointer",
       margin: "5px",
-      transition: "width 0.3s, height 0.3s"
+      transition: "all 0.3s"
     },
     normal: {
       width: "150px",
       height: "200px"
     },
     selected: {
+      marginTop: "-190px",
       width: "175px",
       height: "235px"
     },
