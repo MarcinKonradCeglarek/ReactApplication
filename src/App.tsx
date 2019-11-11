@@ -1,22 +1,18 @@
 import React from "react";
 import "./App.css";
-import User from "./Components/User";
+import StoryContainer from "./Container/Story";
+import { ThemeProvider } from "@material-ui/core/styles";
+import Theme from "./theme";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <div></div>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={Theme}>
+      <div className="App">
+        <header className="App-header">
+          <StoryContainer></StoryContainer>
+        </header>
+      </div>
+    </ThemeProvider>
   );
 }
 

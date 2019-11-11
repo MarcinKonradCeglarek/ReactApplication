@@ -1,10 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { StoreState } from "../Model";
-import { StoryProps } from "../Components/Story";
+import Story, { StoryProps } from "../Components/Story";
 import * as Actions from "../Actions";
 
-class StoryContainer extends Component {}
+class StoryContainer extends Component<StoryProps> {
+  render() {
+    return (
+      <Story
+        Title={this.props.Title}
+        IsVoteRevealed={this.props.IsVoteRevealed}
+        Users={this.props.Users}
+        IsAdmin={true}
+      ></Story>
+    );
+  }
+}
 
 function mapStateToProps(state: StoreState, prop: StoryProps) {
   return {
