@@ -4,6 +4,8 @@ import { StoreState } from "../Model";
 import Story, { StoryProps } from "../Components/Story";
 import * as Actions from "../Actions";
 
+interface StoryContainerProps {}
+
 class StoryContainer extends Component<StoryProps> {
   render() {
     return (
@@ -17,7 +19,7 @@ class StoryContainer extends Component<StoryProps> {
   }
 }
 
-function mapStateToProps(state: StoreState, prop: StoryProps) {
+function mapStateToProps(state: StoreState, ownProps: StoryContainerProps) {
   return {
     Title: state.story.Title,
     IsVoteRevealed: state.story.IsVoteRevealed,

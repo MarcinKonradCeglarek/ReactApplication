@@ -49,3 +49,12 @@
     yarn add @types/classnames (not required, but there are warnings if you don't do this)
 
 **Notes**: https://stackoverflow.com/questions/53111195/typescript-with-classnames-no-index-signature
+
+## Redux
+
+    yarn add redux-actions @types/redux-actions redux-actions-ts-reducer
+
+https://medium.com/@rossbulat/how-to-use-typescript-with-react-and-redux-a118b1e02b76
+https://code-examples.net/en/q/21d6a81
+https://medium.com/@rossbulat/how-to-use-typescript-with-react-and-redux-a118b1e02b76
+https://medium.com/knerd/typescript-tips-series-proper-typing-of-react-redux-connected-components-eda058b6727d

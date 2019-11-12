@@ -18,14 +18,16 @@ const styles = (theme: Theme) =>
     }
   });
 
-export interface StoryProps extends WithStyles<typeof styles, true> {
+export interface StoryProps {
   Title: string;
   IsVoteRevealed: boolean;
   IsAdmin: boolean;
   Users: Array<UserData>;
 }
 
-class Story extends React.PureComponent<StoryProps> {
+class Story extends React.PureComponent<
+  StoryProps & WithStyles<typeof styles, true>
+> {
   handleVote(Id: string, value: number): void {
     throw new Error("Method not implemented.");
   }
