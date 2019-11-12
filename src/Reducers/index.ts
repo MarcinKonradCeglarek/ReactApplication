@@ -7,21 +7,25 @@ import { initialStoreState } from "../Store";
 const RootReducer: Reducer<StoreState, Action<any>> = new ReducerFactory(
   initialStoreState
 )
-  .addReducer(StoryReveal, (state: StoreState, action: Action<boolean>) => {
+  .addReducer(StoryReveal, (state, action) => {
     return {
       ...state,
-      story: { ...state.story, IsVoteRevealed: action.type }
+      story: { ...state.story, IsVoteRevealed: action.payload }
     };
   })
-  .addReducer(StoryReset, (state: StoreState, action: Action) => {
-    return {
-      ...state,
-      story: {
-        Title: "",
-        Result: null,
-        IsVoteRevealed: false
-      }
-    };
-  });
+  .addReducer(
+    StoryReset,
+    (state: StoreState, action: Action): StoreState => {
+      return {
+        ...state,
+        story: {
+          Title: "",
+          Result: null,
+          IsVoteRevealed: false
+        }
+      };
+    }
+  )
+  .toReducer();
 
 export default RootReducer;
