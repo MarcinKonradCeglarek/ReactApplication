@@ -1,24 +1,19 @@
 import { StoreState } from "../Model";
 import { StoryReveal, StoryReset } from "../Actions";
 import { ReducerFactory } from "redux-actions-ts-reducer";
+import { Reducer, Action } from "redux";
+import { initialStoreState } from "../Store";
 
-const initialState: StoreState = {
-  story: {
-    Title: "",
-    Result: null,
-    IsVoteRevealed: false
-  },
-  users: []
-};
-
-const Reducer = new ReducerFactory(initialState)
-  .addReducer(StoryReveal, (state, action) => {
+const RootReducer: Reducer<StoreState, Action<any>> = new ReducerFactory(
+  initialStoreState
+)
+  .addReducer(StoryReveal, (state: StoreState, action: Action<boolean>) => {
     return {
       ...state,
-      story: { ...state.story, IsVoteRevealed: action.payload }
+      story: { ...state.story, IsVoteRevealed: action.type }
     };
   })
-  .addReducer(StoryReset, (state, action) => {
+  .addReducer(StoryReset, (state: StoreState, action: Action) => {
     return {
       ...state,
       story: {
@@ -27,7 +22,6 @@ const Reducer = new ReducerFactory(initialState)
         IsVoteRevealed: false
       }
     };
-  })
-  .toReducer();
+  });
 
-export default Reducer;
+export default RootReducer;
