@@ -15,6 +15,14 @@ interface UserRename {
 }
 
 // *****
+export const USER_CREATE = 'USER_CREATE';
+interface UserCreate {
+    type: typeof USER_CREATE;
+    id: string;
+    name: string;
+}
+
+// *****
 export const STORY_REVEAL = 'STORY_REVEAL';
 interface StoryReveal {
     type: typeof STORY_REVEAL;
@@ -27,4 +35,4 @@ interface StoryReset {
     type: typeof STORY_RESET;
 }
 
-export type Actions = UserVoteAction | UserRename | StoryReveal | StoryReset;
+export type Actions = UserVoteAction | UserRename | UserCreate | StoryReveal | StoryReset;

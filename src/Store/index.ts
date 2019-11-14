@@ -15,6 +15,7 @@ export interface UserData {
 }
 
 export interface UserState {
+    currentUserId: string;
     users: Array<UserData>;
 }
 
@@ -30,7 +31,7 @@ const rootReducer = combineReducers({
 
 export type AppState = ReturnType<typeof rootReducer>;
 
-const initialState: AppState = {
+const initialState: StoreState = {
     story: initialStoryState,
     users: initialUserState,
 };
