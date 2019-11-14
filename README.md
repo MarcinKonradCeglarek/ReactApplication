@@ -16,8 +16,8 @@
 
     yarn add typescript @types/node @types/react @types/react-dom @types/jest
 
-- rename App.js => App.tsx (ts won't work, since App uses JSX syntax)
-- restart development server
+-   rename App.js => App.tsx (ts won't work, since App uses JSX syntax)
+-   restart development server
 
 ## Addint TSLint (https://palantir.github.io/tslint/)
 
@@ -37,7 +37,7 @@
 
     yarn add -D @dump247/storybook-state
 
-- Add import '@storybook/addon-knobs/register'; to addons.js
+-   Add import '@storybook/addon-knobs/register'; to addons.js
 
 #### Storybook knobs https://github.com/storybookjs/storybook/tree/master/addons/knobs
 
@@ -50,11 +50,12 @@
 
 **Notes**: https://stackoverflow.com/questions/53111195/typescript-with-classnames-no-index-signature
 
-## Redux
+## Redux - https://redux.js.org/recipes/usage-with-typescript
 
-    yarn add redux-actions @types/redux-actions redux-actions-ts-reducer
+    yarn add redux-actions @types/redux-actions
 
-https://medium.com/@rossbulat/how-to-use-typescript-with-react-and-redux-a118b1e02b76
-https://code-examples.net/en/q/21d6a81
-https://medium.com/@rossbulat/how-to-use-typescript-with-react-and-redux-a118b1e02b76
-https://medium.com/knerd/typescript-tips-series-proper-typing-of-react-redux-connected-components-eda058b6727d
+Working example: https://codesandbox.io/s/w02m7jm3q7
+
+### React Immutability Helpers - https://reactjs.org/docs/update.html
+
+https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-specific-array-item-in-redux

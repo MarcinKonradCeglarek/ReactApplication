@@ -1,5 +1,5 @@
 import React from 'react';
-import { Theme, Button, Grid, Paper } from '@material-ui/core';
+import { Theme, Button, Grid } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import User from './User';
 import { UserData } from '../Store';
