@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
-import StoryContainer from './Container/Story';
+import Dashboard from './Container/Dashboard';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
 import theme from './Theme';
 import CreateStore, { StoryState, UserState } from './Store';
 import Deck from './Container/Deck';
+import { Grid } from '@material-ui/core';
 
 interface AppProps {
     story: StoryState;
@@ -20,10 +21,14 @@ class App extends React.Component<AppProps> {
             <ThemeProvider theme={theme}>
                 <Provider store={store}>
                     <div className="App">
-                        <header className="App-header">
-                            <StoryContainer />
-                            <Deck />
-                        </header>
+                        <Grid container spacing={3} direction="column">
+                            <Grid item xs={12}>
+                                <Dashboard />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Deck />
+                            </Grid>
+                        </Grid>
                     </div>
                 </Provider>
             </ThemeProvider>

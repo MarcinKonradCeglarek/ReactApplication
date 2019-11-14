@@ -1,5 +1,5 @@
 import { UserState, UserData } from '..';
-import { Actions, USER_RENAME, USER_VOTE, USER_CREATE } from '../Actions/types';
+import { Actions, USER_RENAME, USER_VOTE, USER_CREATE, STORY_RESET } from '../Actions/types';
 import update from 'react-addons-update';
 
 function uuidv4() {
@@ -42,9 +42,9 @@ export function userReducer(state = initialUserState, action: Actions): UserStat
                 return state;
             }
 
-            var userIndex = state.users.findIndex(u => u.Id === action.id);
-            var updatedUser: UserData = update(state.users[userIndex], { Vote: { $set: action.vote } });
-            var updatedUsers: UserData[] = update(state.users, {
+            const userIndex = state.users.findIndex(u => u.Id === action.id);
+            const updatedUser: UserData = update(state.users[userIndex], { Vote: { $set: action.vote } });
+            const updatedUsers: UserData[] = update(state.users, {
                 $splice: [[userIndex, 1, updatedUser]],
             });
 
@@ -58,6 +58,14 @@ export function userReducer(state = initialUserState, action: Actions): UserStat
             const newUsers = update(state.users, { $push: [newUser] });
             const newState2: UserState = { ...state, users: newUsers };
             return newState2;
+        case STORY_RESET:
+            const usersWithoutVotes: UserData[] = state.users.map(u => {
+                return { Id: u.Id, Name: u.Name, Vote: null };
+            });
+            return {
+                ...state,
+                users: usersWithoutVotes,
+            };
         default:
             return state;
     }

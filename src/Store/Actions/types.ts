@@ -35,4 +35,11 @@ interface StoryReset {
     type: typeof STORY_RESET;
 }
 
-export type Actions = UserVoteAction | UserRename | UserCreate | StoryReveal | StoryReset;
+// *****
+export const STORY_RENAME = 'STORY_RENAME';
+interface StoryRename {
+    type: typeof STORY_RENAME;
+    newTitle: string;
+}
+
+export type Actions = UserVoteAction | UserRename | UserCreate | StoryReveal | StoryReset | StoryRename;

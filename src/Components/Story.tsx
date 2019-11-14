@@ -3,7 +3,6 @@ import { Theme, Button } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import User from './User';
 import { UserData } from '../Store';
-import { RevealStory, ResetStory } from '../Store/Actions';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -23,11 +22,14 @@ export interface StoryProps {
     Title: string;
     IsVoteRevealed: boolean;
     Users: UserData[];
+    CurrentUsername: string;
 }
 
 export interface StoryDispatch {
     StoryReveal: () => void;
     StoryReset: () => void;
+    StoryRename: (newName: string) => void;
+    UserRename: (newName: string) => void;
 }
 
 class Story extends React.PureComponent<StoryProps & StoryDispatch & WithStyles<typeof styles, true>> {
@@ -35,16 +37,36 @@ class Story extends React.PureComponent<StoryProps & StoryDispatch & WithStyles<
         throw new Error('Method not implemented.');
     }
 
+    renameUser = () => {
+        let newUsername = prompt('Enter new username', this.props.CurrentUsername);
+        if (newUsername != null) {
+            this.props.UserRename(newUsername);
+        }
+    };
+
+    renameStory = () => {
+        let newTitle = prompt('Enter new story title', this.props.Title);
+        if (newTitle != null) {
+            this.props.StoryRename(newTitle);
+        }
+    };
+
     render() {
         const classes = this.props.classes;
 
         return (
             <div className={classes.wrapper}>
                 <div>
-                    <h2>{this.props.Title}</h2>
+                    <h2>{this.props.Title}&nbsp;</h2>
                 </div>
 
                 <div>
+                    <Button className={classes.button} variant="contained" color="primary" onClick={this.renameStory}>
+                        Set title
+                    </Button>
+                    <Button className={classes.button} variant="contained" color="primary" onClick={this.renameUser}>
+                        Change user
+                    </Button>
                     <Button className={classes.button} variant="contained" color="primary" onClick={this.props.StoryReveal}>
                         Reveal
                     </Button>

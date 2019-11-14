@@ -1,5 +1,5 @@
 import { StoryState } from '..';
-import { Actions, STORY_REVEAL, STORY_RESET } from '../Actions/types';
+import { Actions, STORY_REVEAL, STORY_RESET, STORY_RENAME } from '../Actions/types';
 
 export const initialStoryState: StoryState = {
     Title: '',
@@ -20,6 +20,11 @@ export function storyReducer(state = initialStoryState, action: Actions): StoryS
                 Title: '',
                 Result: null,
                 IsVoteRevealed: false,
+            };
+        case STORY_RENAME:
+            return {
+                ...state,
+                Title: action.newTitle,
             };
         default:
             return state;

@@ -1,6 +1,6 @@
-import { Actions, USER_VOTE, USER_RENAME, STORY_REVEAL, STORY_RESET, USER_CREATE } from './types';
+import { Actions, USER_VOTE, USER_RENAME, STORY_REVEAL, STORY_RESET, USER_CREATE, STORY_RENAME } from './types';
 
-export function UserVote(id: string, vote: number): Actions {
+export function VoteUser(id: string, vote: number): Actions {
     return {
         type: USER_VOTE,
         id: id,
@@ -8,7 +8,7 @@ export function UserVote(id: string, vote: number): Actions {
     };
 }
 
-export function UserRename(id: string, newName: string): Actions {
+export function RenameUser(id: string, newName: string): Actions {
     return {
         type: USER_RENAME,
         id: id,
@@ -16,7 +16,7 @@ export function UserRename(id: string, newName: string): Actions {
     };
 }
 
-export function UserCreate(id: string, name: string): Actions {
+export function CreateUser(id: string, name: string): Actions {
     return {
         type: USER_CREATE,
         id: id,
@@ -34,5 +34,12 @@ export function RevealStory(): Actions {
 export function ResetStory(): Actions {
     return {
         type: STORY_RESET,
+    };
+}
+
+export function RenameStory(newTitle: string): Actions {
+    return {
+        type: STORY_RENAME,
+        newTitle: newTitle,
     };
 }

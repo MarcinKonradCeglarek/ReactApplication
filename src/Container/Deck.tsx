@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StoreState, UserData } from '../Store';
-import { UserVote, UserCreate } from '../Store/Actions';
+import { VoteUser, CreateUser } from '../Store/Actions';
 import Cards from '../Components/Cards';
 
 interface DeckContainerProps {
@@ -11,8 +11,8 @@ interface DeckContainerProps {
 }
 
 interface DeckContainerDispatch {
-    VoteAction: typeof UserVote;
-    CreateUserAction: typeof UserCreate;
+    VoteAction: typeof VoteUser;
+    CreateUserAction: typeof CreateUser;
 }
 
 class DeckContainer extends Component<DeckContainerProps & DeckContainerDispatch> {
@@ -43,11 +43,8 @@ function mapStateToProps(state: StoreState): DeckContainerProps {
 }
 
 const mapDispatchToProps: DeckContainerDispatch = {
-    VoteAction: UserVote,
-    CreateUserAction: UserCreate,
+    VoteAction: VoteUser,
+    CreateUserAction: CreateUser,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(DeckContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DeckContainer);
