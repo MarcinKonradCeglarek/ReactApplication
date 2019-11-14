@@ -3,6 +3,7 @@ import { Theme, Button } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import User from './User';
 import { UserData } from '../Store';
+import { RevealStory, ResetStory } from '../Store/Actions';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -24,7 +25,12 @@ export interface StoryProps {
     Users: UserData[];
 }
 
-class Story extends React.PureComponent<StoryProps & WithStyles<typeof styles, true>> {
+export interface StoryDispatch {
+    StoryReveal: () => void;
+    StoryReset: () => void;
+}
+
+class Story extends React.PureComponent<StoryProps & StoryDispatch & WithStyles<typeof styles, true>> {
     handleVote(Id: string, value: number): void {
         throw new Error('Method not implemented.');
     }
@@ -39,10 +45,10 @@ class Story extends React.PureComponent<StoryProps & WithStyles<typeof styles, t
                 </div>
 
                 <div>
-                    <Button className={classes.button} variant="contained" color="primary">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={this.props.StoryReveal}>
                         Reveal
                     </Button>
-                    <Button className={classes.button} variant="contained" color="primary">
+                    <Button className={classes.button} variant="contained" color="primary" onClick={this.props.StoryReset}>
                         Reset
                     </Button>
                 </div>
@@ -50,6 +56,7 @@ class Story extends React.PureComponent<StoryProps & WithStyles<typeof styles, t
                 <div className={classes.userWrapper}>
                     {this.props.Users.map(u => (
                         <User
+                            key={`User_${u.Id}`}
                             Id={u.Id}
                             Name={u.Name}
                             Vote={u.Vote}

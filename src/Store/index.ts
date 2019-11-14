@@ -1,4 +1,4 @@
-import { createStore, Action, combineReducers } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import storyReducer, { initialStoryState } from './Reducers/storyReducer';
 import userReducer, { initialUserState } from './Reducers/userReducer';
 

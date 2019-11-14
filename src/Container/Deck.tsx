@@ -2,21 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StoreState, UserData } from '../Store';
 import { UserVote, UserCreate } from '../Store/Actions';
-import Cards, { CardsProps } from '../Components/Cards';
+import Cards from '../Components/Cards';
 
-interface StoryContainerProps {
+interface DeckContainerProps {
     currentUserId: string;
     currentUser: UserData | undefined;
+    SelectedValue: number | null;
+}
+
+interface DeckContainerDispatch {
     VoteAction: typeof UserVote;
     CreateUserAction: typeof UserCreate;
 }
 
-class DeckContainer extends Component<CardsProps & StoryContainerProps> {
+class DeckContainer extends Component<DeckContainerProps & DeckContainerDispatch> {
     onSelect = (newValue: number) => {
         this.props.VoteAction(this.props.currentUserId, newValue);
     };
 
-    onComponentMount() {
+    componentDidMount() {
         if (this.props.currentUser === undefined) {
             this.props.CreateUserAction(this.props.currentUserId, 'Bob');
         }
@@ -27,7 +31,7 @@ class DeckContainer extends Component<CardsProps & StoryContainerProps> {
     }
 }
 
-function mapStateToProps(state: StoreState, ownProps: StoryContainerProps) {
+function mapStateToProps(state: StoreState): DeckContainerProps {
     const currentUserId = state.users.currentUserId;
     const currentUser = state.users.users.find(u => u.Id === currentUserId);
 
@@ -38,7 +42,7 @@ function mapStateToProps(state: StoreState, ownProps: StoryContainerProps) {
     };
 }
 
-const mapDispatchToProps = {
+const mapDispatchToProps: DeckContainerDispatch = {
     VoteAction: UserVote,
     CreateUserAction: UserCreate,
 };

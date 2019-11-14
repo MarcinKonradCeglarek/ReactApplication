@@ -2,13 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StoreState } from '../Store';
 import Story, { StoryProps } from '../Components/Story';
-import * as Actions from '../Store/Actions';
+import { RevealStory, ResetStory } from '../Store/Actions';
 
 interface StoryContainerProps {}
 
-class StoryContainer extends Component<StoryProps> {
+interface DashboardDispatch {
+    StoryReveal: typeof RevealStory;
+    StoryReset: typeof ResetStory;
+}
+class StoryContainer extends Component<StoryProps & DashboardDispatch> {
     render() {
-        return <Story {...this.props}></Story>;
+        return (
+            <Story
+                Title={this.props.Title}
+                IsVoteRevealed={this.props.IsVoteRevealed}
+                Users={this.props.Users}
+                StoryReset={this.props.StoryReset}
+                StoryReveal={this.props.StoryReveal}
+            ></Story>
+        );
     }
 }
 
@@ -20,9 +32,9 @@ function mapStateToProps(state: StoreState, ownProps: StoryContainerProps): Stor
     };
 }
 
-const mapDispatchToProps = {
-    StoryReveal: Actions.RevealStory,
-    StoryReset: Actions.ResetStory,
+const mapDispatchToProps: DashboardDispatch = {
+    StoryReveal: RevealStory,
+    StoryReset: ResetStory,
 };
 
 export default connect(

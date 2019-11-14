@@ -4,12 +4,8 @@ import StoryContainer from './Container/Story';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
 import theme from './Theme';
-import CreateStore, { AppState, StoryState, UserState } from './Store';
-
-const mapStateToProps = (state: AppState) => ({
-    story: state.story,
-    users: state.users,
-});
+import CreateStore, { StoryState, UserState } from './Store';
+import Deck from './Container/Deck';
 
 interface AppProps {
     story: StoryState;
@@ -26,6 +22,7 @@ class App extends React.Component<AppProps> {
                     <div className="App">
                         <header className="App-header">
                             <StoryContainer />
+                            <Deck />
                         </header>
                     </div>
                 </Provider>
