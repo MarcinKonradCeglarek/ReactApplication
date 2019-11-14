@@ -2,7 +2,7 @@ import { StoryState } from '..';
 import { Actions, STORY_REVEAL, STORY_RESET, STORY_RENAME } from '../Actions/types';
 
 export const initialStoryState: StoryState = {
-    Title: '',
+    Title: '(no title)',
     Result: null,
     IsVoteRevealed: false,
 };
