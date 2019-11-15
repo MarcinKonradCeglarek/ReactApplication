@@ -1,5 +1,5 @@
 import { UserState, UserData } from '..';
-import { USER_RENAME, USER_VOTE, USER_CREATE, STORY_RESET, USER_DELETE, Responses } from '../Actions/types';
+import { USER_RENAME, USER_VOTE, USER_CREATE, STORY_RESET, USER_DELETE, Responses, USER_INIT } from '../Actions/types';
 import update from 'react-addons-update';
 
 function uuidv4() {
@@ -17,6 +17,9 @@ export const initialUserState: UserState = {
 
 export function userReducer(state = initialUserState, action: Responses): UserState {
     switch (action.type) {
+        case USER_INIT:
+            const existingUsers: UserData[] = update(state.users, { $push: action.users });
+            return { ...state, users: existingUsers };
         case USER_RENAME:
             const newState = update(state, {
                 users: {

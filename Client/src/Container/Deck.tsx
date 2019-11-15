@@ -22,7 +22,7 @@ class DeckContainer extends Component<DeckContainerProps & DeckContainerDispatch
 
     componentDidMount() {
         if (this.props.currentUser === undefined) {
-            this.props.CreateUserAction(this.props.currentUserId, 'Bob');
+            this.props.CreateUserAction(this.props.currentUserId, this.props.currentUserId.substr(0, 8));
         }
     }
 
@@ -47,4 +47,7 @@ const mapDispatchToProps: DeckContainerDispatch = {
     CreateUserAction: UserCreateRequest,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeckContainer);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DeckContainer);

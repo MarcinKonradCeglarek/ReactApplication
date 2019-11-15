@@ -9,7 +9,6 @@ export type Id = string;
 
 export interface StoryState {
     Title: string;
-    Result: number | null;
     IsVoteRevealed: boolean;
 }
 

@@ -1,7 +1,13 @@
-import { Id } from '..';
+import { Id, UserData, StoryState } from '..';
 
 interface BroadcastableAction {
     isRequest: true;
+}
+
+export const USER_INIT = 'USER_INIT';
+interface UserListResponse {
+    type: typeof USER_INIT;
+    users: UserData[];
 }
 
 // *****
@@ -46,6 +52,12 @@ interface UserDeleteAction {
 interface UserDeleteRequest extends UserDeleteAction, BroadcastableAction {}
 interface UserDeleteResponse extends UserDeleteAction {}
 
+export const STORY_INIT = 'STORY_INIT';
+interface StoryInitResponse {
+    type: typeof STORY_INIT;
+    story: StoryState;
+}
+
 // *****
 export const STORY_REVEAL = 'STORY_REVEAL';
 interface StoryRevealAction {
@@ -86,10 +98,12 @@ export type Requests =
     | StoryRenameRequest;
 
 export type Responses =
+    | UserListResponse
     | UserVoteResponse
     | UserRenameResponse
     | UserCreateResponse
     | UserDeleteResponse
+    | StoryInitResponse
     | StoryRevealResponse
     | StoryResetResponse
     | StoryRenameResponse;
