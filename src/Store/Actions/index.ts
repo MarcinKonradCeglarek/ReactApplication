@@ -1,4 +1,4 @@
-import { Actions, USER_VOTE, USER_RENAME, STORY_REVEAL, STORY_RESET, USER_CREATE, STORY_RENAME } from './types';
+import { Actions, USER_VOTE, USER_RENAME, STORY_REVEAL, STORY_RESET, USER_CREATE, STORY_RENAME, USER_DELETE } from './types';
 
 export function VoteUser(id: string, vote: number): Actions {
     return {
@@ -13,6 +13,13 @@ export function RenameUser(id: string, newName: string): Actions {
         type: USER_RENAME,
         id: id,
         newName: newName,
+    };
+}
+
+export function RemoveUser(id: string): Actions {
+    return {
+        type: USER_DELETE,
+        id: id,
     };
 }
 

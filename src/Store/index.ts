@@ -9,9 +9,9 @@ export interface StoryState {
 }
 
 export interface UserData {
-    Id: string;
-    Name: string;
-    Vote: number | null;
+    id: string;
+    name: string;
+    vote: number | null;
 }
 
 export interface UserState {

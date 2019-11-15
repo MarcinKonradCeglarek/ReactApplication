@@ -37,7 +37,7 @@ class Dashboard extends Component<DashboardProps & DashboardDispatch> {
 
 function mapStateToProps(state: StoreState): DashboardProps {
     const currentUserId = state.users.currentUserId;
-    const currentUser = state.users.users.find(u => u.Id === currentUserId);
+    const currentUser = state.users.users.find(u => u.id === currentUserId);
 
     return {
         Title: state.story.Title,

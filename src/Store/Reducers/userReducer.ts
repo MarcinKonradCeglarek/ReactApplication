@@ -1,5 +1,5 @@
 import { UserState, UserData } from '..';
-import { Actions, USER_RENAME, USER_VOTE, USER_CREATE, STORY_RESET } from '../Actions/types';
+import { Actions, USER_RENAME, USER_VOTE, USER_CREATE, STORY_RESET, USER_DELETE } from '../Actions/types';
 import update from 'react-addons-update';
 
 function uuidv4() {
@@ -23,13 +23,13 @@ export function userReducer(state = initialUserState, action: Actions): UserStat
                 users: {
                     $apply: (users: UserData[]) =>
                         users.map(user => {
-                            if (user.Id !== action.id) {
+                            if (user.id !== action.id) {
                                 return user;
                             }
 
                             const updatedUser: UserData = {
                                 ...user,
-                                Name: action.newName,
+                                name: action.newName,
                             };
 
                             return updatedUser;
@@ -38,11 +38,11 @@ export function userReducer(state = initialUserState, action: Actions): UserStat
             });
             return newState;
         case USER_VOTE:
-            if (!state.users.find(u => u.Id === state.currentUserId)) {
+            if (!state.users.find(u => u.id === state.currentUserId)) {
                 return state;
             }
 
-            const userIndex = state.users.findIndex(u => u.Id === action.id);
+            const userIndex = state.users.findIndex(u => u.id === action.id);
             const updatedUser: UserData = update(state.users[userIndex], { Vote: { $set: action.vote } });
             const updatedUsers: UserData[] = update(state.users, {
                 $splice: [[userIndex, 1, updatedUser]],
@@ -50,17 +50,26 @@ export function userReducer(state = initialUserState, action: Actions): UserStat
 
             return { ...state, users: updatedUsers };
         case USER_CREATE:
-            if (state.users.find(u => u.Id === state.currentUserId)) {
+            if (state.users.find(u => u.id === state.currentUserId)) {
                 return state;
             }
 
-            const newUser: UserData = { Id: state.currentUserId, Name: action.name, Vote: null };
+            const newUser: UserData = { id: state.currentUserId, name: action.name, vote: null };
             const newUsers = update(state.users, { $push: [newUser] });
             const newState2: UserState = { ...state, users: newUsers };
             return newState2;
+        case USER_DELETE:
+            if (!state.users.find(u => u.id === state.currentUserId)) {
+                return state;
+            }
+
+            const userToRemoveIndex = state.users.findIndex(u => u.id === action.id);
+            const usersWithoutUser: UserData[] = update(state.users, { $splice: [[userToRemoveIndex, 1]] });
+            const newState3: UserState = { ...state, users: usersWithoutUser };
+            return newState3;
         case STORY_RESET:
             const usersWithoutVotes: UserData[] = state.users.map(u => {
-                return { Id: u.Id, Name: u.Name, Vote: null };
+                return { id: u.id, name: u.name, vote: null };
             });
             return {
                 ...state,

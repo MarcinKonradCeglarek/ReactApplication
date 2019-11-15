@@ -90,7 +90,7 @@ class Story extends React.PureComponent<StoryProps & StoryDispatch & WithStyles<
                     <Grid item xs={12}>
                         <div className={classes.paper}>
                             {this.props.Users.map(u => (
-                                <User key={`User_${u.Id}`} Id={u.Id} Name={u.Name} Vote={u.Vote} IsVoteRevealed={this.props.IsVoteRevealed}></User>
+                                <User key={`User_${u.id}`} Id={u.id} Name={u.name} Vote={u.vote} IsVoteRevealed={this.props.IsVoteRevealed}></User>
                             ))}
                         </div>
                     </Grid>

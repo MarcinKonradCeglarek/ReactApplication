@@ -33,12 +33,12 @@ class DeckContainer extends Component<DeckContainerProps & DeckContainerDispatch
 
 function mapStateToProps(state: StoreState): DeckContainerProps {
     const currentUserId = state.users.currentUserId;
-    const currentUser = state.users.users.find(u => u.Id === currentUserId);
+    const currentUser = state.users.users.find(u => u.id === currentUserId);
 
     return {
         currentUserId: currentUserId,
         currentUser: currentUser,
-        SelectedValue: currentUser !== undefined ? currentUser.Vote : null,
+        SelectedValue: currentUser !== undefined ? currentUser.vote : null,
     };
 }
 
