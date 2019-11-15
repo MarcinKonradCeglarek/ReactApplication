@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { StoreState } from '../Store';
 import Story, { StoryProps } from '../Components/Story';
 import { RevealStory, ResetStory, RenameUser, RenameStory } from '../Store/Actions';
+import io from 'socket.io-client';
 
 interface DashboardProps extends StoryProps {
     CurrentUserId: string;
@@ -19,6 +20,13 @@ class Dashboard extends Component<DashboardProps & DashboardDispatch> {
         this.props.UserRename(this.props.CurrentUserId, newName);
     };
 
+    componentDidMount() {
+        var socket = io.connect('http://localhost');
+        socket.on('news', function(data: any) {
+            console.log(data);
+            socket.emit('my other event', { my: 'data' });
+        });
+    }
     render() {
         return (
             <Story
@@ -55,4 +63,7 @@ const mapDispatchToProps: DashboardDispatch = {
     UserRename: RenameUser,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Dashboard);

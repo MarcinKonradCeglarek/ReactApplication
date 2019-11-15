@@ -16,8 +16,8 @@
 
     yarn add typescript @types/node @types/react @types/react-dom @types/jest
 
--   rename App.js => App.tsx (ts won't work, since App uses JSX syntax)
--   restart development server
+- rename App.js => App.tsx (ts won't work, since App uses JSX syntax)
+- restart development server
 
 ## Addint TSLint (https://palantir.github.io/tslint/)
 
@@ -37,7 +37,7 @@
 
     yarn add -D @dump247/storybook-state
 
--   Add import '@storybook/addon-knobs/register'; to addons.js
+- Add import '@storybook/addon-knobs/register'; to addons.js
 
 #### Storybook knobs https://github.com/storybookjs/storybook/tree/master/addons/knobs
 
@@ -59,3 +59,7 @@ Working example: https://codesandbox.io/s/w02m7jm3q7
 ### React Immutability Helpers - https://reactjs.org/docs/update.html
 
 https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-specific-array-item-in-redux
+
+## Socket.io
+
+https://medium.com/dailyjs/combining-react-with-socket-io-for-real-time-goodness-d26168429a34
