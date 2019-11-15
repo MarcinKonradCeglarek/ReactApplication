@@ -38,33 +38,33 @@ export function userReducer(state = initialUserState, action: Responses): UserSt
             return newState;
 
         case USER_VOTE:
-            if (!state.users.find(u => u.id === state.currentUserId)) {
+            if (!state.users.find(u => u.id === action.id)) {
                 return state;
             }
 
-            const userIndex = state.users.findIndex(u => u.id === action.id);
-            const updatedUser: UserData = update(state.users[userIndex], { Vote: { $set: action.vote } });
+            let userVoteIndex = state.users.findIndex(u => u.id === action.id);
+            const userWithVote: UserData = update(state.users[userVoteIndex], { vote: { $set: action.vote } });
             const updatedUsers: UserData[] = update(state.users, {
-                $splice: [[userIndex, 1, updatedUser]],
+                $splice: [[userVoteIndex, 1, userWithVote]],
             });
             return { ...state, users: updatedUsers };
 
         case USER_CREATE:
-            if (state.users.find(u => u.id === state.currentUserId)) {
+            if (state.users.find(u => u.id === action.id)) {
                 return state;
             }
 
-            const newUser: UserData = { id: state.currentUserId, name: action.name, vote: null };
+            const newUser: UserData = { id: action.id, name: action.name, vote: null };
             const newUsers = update(state.users, { $push: [newUser] });
             const newState2: UserState = { ...state, users: newUsers };
             return newState2;
 
         case USER_DELETE:
-            if (!state.users.find(u => u.id === state.currentUserId)) {
+            if (!state.users.find(u => u.id === action.id)) {
                 return state;
             }
 
-            const userToRemoveIndex = state.users.findIndex(u => u.id === action.id);
+            let userToRemoveIndex = state.users.findIndex(u => u.id === action.id);
             const usersWithoutUserToRemove: UserData[] = update(state.users, { $splice: [[userToRemoveIndex, 1]] });
             const newState3: UserState = { ...state, users: usersWithoutUserToRemove };
             return newState3;
