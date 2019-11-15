@@ -1,6 +1,10 @@
-import { createStore, combineReducers } from 'redux';
+import socketIO from 'socket.io-client';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import storyReducer, { initialStoryState } from './Reducers/storyReducer';
 import userReducer, { initialUserState } from './Reducers/userReducer';
+import socketIoMiddleware from './Middleware/SocketsIoMiddleware';
+
+export type Id = string;
 
 export interface StoryState {
     Title: string;
@@ -9,13 +13,13 @@ export interface StoryState {
 }
 
 export interface UserData {
-    Id: string;
-    Name: string;
-    Vote: number | null;
+    id: Id;
+    name: string;
+    vote: number | null;
 }
 
 export interface UserState {
-    currentUserId: string;
+    currentUserId: Id;
     users: Array<UserData>;
 }
 
@@ -31,11 +35,13 @@ const rootReducer = combineReducers({
 
 export type AppState = ReturnType<typeof rootReducer>;
 
-const initialState: StoreState = {
+const io = socketIO.connect(`http://localhost:80`);
+
+export const initialState: StoreState = {
     story: initialStoryState,
     users: initialUserState,
 };
 
 export default function CreateStore() {
-    return createStore(rootReducer, initialState);
+    return createStore(rootReducer, initialState, compose(applyMiddleware(socketIoMiddleware(io))));
 }

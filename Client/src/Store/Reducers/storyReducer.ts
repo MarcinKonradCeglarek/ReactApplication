@@ -1,5 +1,5 @@
 import { StoryState } from '..';
-import { Actions, STORY_REVEAL, STORY_RESET, STORY_RENAME } from '../Actions/types';
+import { STORY_REVEAL, STORY_RESET, STORY_RENAME, Responses } from '../Actions/types';
 
 export const initialStoryState: StoryState = {
     Title: '(no title)',
@@ -7,7 +7,7 @@ export const initialStoryState: StoryState = {
     IsVoteRevealed: false,
 };
 
-export function storyReducer(state = initialStoryState, action: Actions): StoryState {
+export function storyReducer(state = initialStoryState, action: Responses): StoryState {
     console.log(state, action);
     switch (action.type) {
         case STORY_REVEAL:

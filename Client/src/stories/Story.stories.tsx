@@ -10,8 +10,8 @@ storiesOf('Story', module).add(
             Title={store.state.Title}
             IsVoteRevealed={store.state.IsVoteRevealed}
             Users={[
-                { Id: '1', Name: store.state.CurrentUsername, Vote: 3 },
-                { Id: '2', Name: 'User2', Vote: 2 },
+                { id: '1', name: store.state.CurrentUsername, vote: 3 },
+                { id: '2', name: 'User2', vote: 2 },
             ]}
             CurrentUsername={store.state.CurrentUsername}
             StoryReveal={() => store.set({ IsVoteRevealed: true })}

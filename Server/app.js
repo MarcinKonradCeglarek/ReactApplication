@@ -10,9 +10,12 @@ app.get("/", function(req, res) {
 });
 
 io.on("connection", function(socket) {
-  socket.emit("news", { hello: "world" });
-  socket.on("my other event", function(data) {
-    console.log(data);
+  console.log(socket);
+  socket.on("action", function(payload) {
+    delete payload.isRequest;
+    console.log(payload);
+    socket.broadcast.emit("action", payload);
+    socket.emit("action", payload);
   });
 });
 

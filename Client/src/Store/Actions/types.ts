@@ -1,45 +1,95 @@
+import { Id } from '..';
+
+interface BroadcastableAction {
+    isRequest: true;
+}
+
 // *****
 export const USER_VOTE = 'USER_VOTE';
 interface UserVoteAction {
     type: typeof USER_VOTE;
-    id: string;
+    id: Id;
     vote: number;
 }
+interface UserVoteRequest extends UserVoteAction, BroadcastableAction {}
+interface UserVoteResponse extends UserVoteAction {}
 
 // *****
 export const USER_RENAME = 'USER_RENAME';
-interface UserRename {
+interface UserRenameAction {
     type: typeof USER_RENAME;
-    id: string;
+    id: Id;
     newName: string;
 }
 
+interface UserRenameRequest extends UserRenameAction, BroadcastableAction {}
+interface UserRenameResponse extends UserRenameAction {}
+
 // *****
 export const USER_CREATE = 'USER_CREATE';
-interface UserCreate {
+interface UserCreateAction {
     type: typeof USER_CREATE;
-    id: string;
+    id: Id;
     name: string;
 }
 
+interface UserCreateRequest extends UserCreateAction, BroadcastableAction {}
+interface UserCreateResponse extends UserCreateAction {}
+
+// *****
+export const USER_DELETE = 'USER_DELETE';
+interface UserDeleteAction {
+    type: typeof USER_DELETE;
+    id: Id;
+}
+
+interface UserDeleteRequest extends UserDeleteAction, BroadcastableAction {}
+interface UserDeleteResponse extends UserDeleteAction {}
+
 // *****
 export const STORY_REVEAL = 'STORY_REVEAL';
-interface StoryReveal {
+interface StoryRevealAction {
     type: typeof STORY_REVEAL;
     isRevealed: boolean;
 }
 
+interface StoryRevealRequest extends StoryRevealAction, BroadcastableAction {}
+interface StoryRevealResponse extends StoryRevealAction {}
+
 // *****
 export const STORY_RESET = 'STORY_RESET';
-interface StoryReset {
+interface StoryResetAction {
     type: typeof STORY_RESET;
 }
 
+interface StoryResetRequest extends StoryResetAction, BroadcastableAction {}
+interface StoryResetResponse extends StoryResetAction {}
+
 // *****
 export const STORY_RENAME = 'STORY_RENAME';
-interface StoryRename {
+interface StoryRenameAction {
     type: typeof STORY_RENAME;
     newTitle: string;
 }
 
-export type Actions = UserVoteAction | UserRename | UserCreate | StoryReveal | StoryReset | StoryRename;
+interface StoryRenameRequest extends StoryRenameAction, BroadcastableAction {}
+interface StoryRenameResponse extends StoryRenameAction {}
+
+// *****
+export type Requests =
+    | UserVoteRequest
+    | UserRenameRequest
+    | UserCreateRequest
+    | UserDeleteRequest
+    | StoryRevealRequest
+    | StoryResetRequest
+    | StoryRenameRequest;
+
+export type Responses =
+    | UserVoteResponse
+    | UserRenameResponse
+    | UserCreateResponse
+    | UserDeleteResponse
+    | StoryRevealResponse
+    | StoryResetResponse
+    | StoryRenameResponse;

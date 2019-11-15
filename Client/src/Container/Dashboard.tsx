@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StoreState } from '../Store';
 import Story, { StoryProps } from '../Components/Story';
-import { RevealStory, ResetStory, RenameUser, RenameStory } from '../Store/Actions';
+import { StoryRevealRequest, StoryResetRequest, UserRenameRequest, StoryRenameRequest } from '../Store/Actions';
 import io from 'socket.io-client';
 
 interface DashboardProps extends StoryProps {
@@ -10,10 +10,10 @@ interface DashboardProps extends StoryProps {
 }
 
 interface DashboardDispatch {
-    StoryReveal: typeof RevealStory;
-    StoryReset: typeof ResetStory;
-    StoryRename: typeof RenameStory;
-    UserRename: typeof RenameUser;
+    StoryReveal: typeof StoryRevealRequest;
+    StoryReset: typeof StoryResetRequest;
+    StoryRename: typeof StoryRenameRequest;
+    UserRename: typeof UserRenameRequest;
 }
 class Dashboard extends Component<DashboardProps & DashboardDispatch> {
     userRename = (newName: string) => {
@@ -45,22 +45,22 @@ class Dashboard extends Component<DashboardProps & DashboardDispatch> {
 
 function mapStateToProps(state: StoreState): DashboardProps {
     const currentUserId = state.users.currentUserId;
-    const currentUser = state.users.users.find(u => u.Id === currentUserId);
+    const currentUser = state.users.users.find(u => u.id === currentUserId);
 
     return {
         Title: state.story.Title,
         IsVoteRevealed: state.story.IsVoteRevealed,
         Users: state.users.users,
         CurrentUserId: currentUserId,
-        CurrentUsername: currentUser ? currentUser.Name : '',
+        CurrentUsername: currentUser ? currentUser.name : '',
     };
 }
 
 const mapDispatchToProps: DashboardDispatch = {
-    StoryReveal: RevealStory,
-    StoryReset: ResetStory,
-    StoryRename: RenameStory,
-    UserRename: RenameUser,
+    StoryReveal: StoryRevealRequest,
+    StoryReset: StoryResetRequest,
+    StoryRename: StoryRenameRequest,
+    UserRename: UserRenameRequest,
 };
 
 export default connect(

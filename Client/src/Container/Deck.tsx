@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StoreState, UserData } from '../Store';
-import { VoteUser, CreateUser } from '../Store/Actions';
+import { UserVoteRequest, UserCreateRequest } from '../Store/Actions';
 import Cards from '../Components/Cards';
 
 interface DeckContainerProps {
@@ -11,8 +11,8 @@ interface DeckContainerProps {
 }
 
 interface DeckContainerDispatch {
-    VoteAction: typeof VoteUser;
-    CreateUserAction: typeof CreateUser;
+    VoteAction: typeof UserVoteRequest;
+    CreateUserAction: typeof UserCreateRequest;
 }
 
 class DeckContainer extends Component<DeckContainerProps & DeckContainerDispatch> {
@@ -33,18 +33,18 @@ class DeckContainer extends Component<DeckContainerProps & DeckContainerDispatch
 
 function mapStateToProps(state: StoreState): DeckContainerProps {
     const currentUserId = state.users.currentUserId;
-    const currentUser = state.users.users.find(u => u.Id === currentUserId);
+    const currentUser = state.users.users.find(u => u.id === currentUserId);
 
     return {
         currentUserId: currentUserId,
         currentUser: currentUser,
-        SelectedValue: currentUser !== undefined ? currentUser.Vote : null,
+        SelectedValue: currentUser !== undefined ? currentUser.vote : null,
     };
 }
 
 const mapDispatchToProps: DeckContainerDispatch = {
-    VoteAction: VoteUser,
-    CreateUserAction: CreateUser,
+    VoteAction: UserVoteRequest,
+    CreateUserAction: UserCreateRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckContainer);
