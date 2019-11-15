@@ -16,7 +16,6 @@ export const initialUserState: UserState = {
 };
 
 export function userReducer(state = initialUserState, action: Responses): UserState {
-    console.log(state, action);
     switch (action.type) {
         case USER_RENAME:
             const newState = update(state, {

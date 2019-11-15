@@ -10,7 +10,7 @@ app.get("/", function(req, res) {
 });
 
 io.on("connection", function(socket) {
-  console.log(socket);
+  console.log("Connected: " + socket.client.conn.id);
   socket.on("action", function(payload) {
     delete payload.isRequest;
     console.log(payload);

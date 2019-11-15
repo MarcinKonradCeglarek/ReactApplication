@@ -8,7 +8,6 @@ export const initialStoryState: StoryState = {
 };
 
 export function storyReducer(state = initialStoryState, action: Responses): StoryState {
-    console.log(state, action);
     switch (action.type) {
         case STORY_REVEAL:
             return {

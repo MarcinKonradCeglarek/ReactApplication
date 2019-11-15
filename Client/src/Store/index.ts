@@ -3,6 +3,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import storyReducer, { initialStoryState } from './Reducers/storyReducer';
 import userReducer, { initialUserState } from './Reducers/userReducer';
 import socketIoMiddleware from './Middleware/SocketsIoMiddleware';
+import logger from 'redux-logger';
 
 export type Id = string;
 
@@ -43,5 +44,5 @@ export const initialState: StoreState = {
 };
 
 export default function CreateStore() {
-    return createStore(rootReducer, initialState, compose(applyMiddleware(socketIoMiddleware(io))));
+    return createStore(rootReducer, initialState, compose(applyMiddleware(socketIoMiddleware(io), logger)));
 }
