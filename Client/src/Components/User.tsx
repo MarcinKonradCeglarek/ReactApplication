@@ -1,7 +1,8 @@
 import React from 'react';
 import { Theme } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
+import { orange, blue } from '@material-ui/core/colors';
+import classnames from 'classnames';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -17,6 +18,9 @@ const styles = (theme: Theme) =>
             width: '150px',
             height: '50px',
         },
+        myUser: {
+            backgroundColor: orange[500],
+        },
     });
 
 export interface UserProps extends WithStyles<typeof styles, true> {
@@ -24,6 +28,7 @@ export interface UserProps extends WithStyles<typeof styles, true> {
     Name: string;
     Vote: number | null;
     IsVoteRevealed: boolean;
+    IsMe: boolean;
 }
 
 class Card extends React.PureComponent<UserProps> {
@@ -33,7 +38,7 @@ class Card extends React.PureComponent<UserProps> {
         const vote = this.props.Vote ? (this.props.IsVoteRevealed ? this.props.Vote : '!!!') : '...';
 
         return (
-            <div className={classes.wrapper}>
+            <div className={classnames({ [classes.wrapper]: true, [classes.myUser]: this.props.IsMe })}>
                 <h3>
                     {this.props.Name}: {vote}
                 </h3>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Theme, Button, Grid } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import User from './User';
-import { UserData } from '../Store';
+import { UserData, Id } from '../Store';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -21,7 +21,9 @@ const styles = (theme: Theme) =>
         paper: {
             padding: theme.spacing(5),
             display: 'flex',
+            flexDirection: 'row',
             justifyContent: 'center',
+            flexWrap: 'wrap',
         },
     });
 
@@ -30,6 +32,7 @@ export interface StoryProps {
     IsVoteRevealed: boolean;
     Users: UserData[];
     CurrentUsername: string;
+    CurrentUserId: Id;
 }
 
 export interface StoryDispatch {
@@ -56,6 +59,10 @@ class Story extends React.PureComponent<StoryProps & StoryDispatch & WithStyles<
         if (newTitle != null) {
             this.props.StoryRename(newTitle);
         }
+    };
+
+    getSortedUsers = () => {
+        return this.props.Users.sort((u1, u2) => (u1.name === u2.name ? 0 : u1.name > u2.name ? 1 : -1));
     };
 
     render() {
@@ -89,8 +96,15 @@ class Story extends React.PureComponent<StoryProps & StoryDispatch & WithStyles<
 
                     <Grid item xs={12}>
                         <div className={classes.paper}>
-                            {this.props.Users.map(u => (
-                                <User key={`User_${u.id}`} Id={u.id} Name={u.name} Vote={u.vote} IsVoteRevealed={this.props.IsVoteRevealed}></User>
+                            {this.getSortedUsers().map(u => (
+                                <User
+                                    key={`User_${u.id}`}
+                                    Id={u.id}
+                                    Name={u.name}
+                                    Vote={u.vote}
+                                    IsVoteRevealed={this.props.IsVoteRevealed}
+                                    IsMe={u.id === this.props.CurrentUserId}
+                                ></User>
                             ))}
                         </div>
                     </Grid>

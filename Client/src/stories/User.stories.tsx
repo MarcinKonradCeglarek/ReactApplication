@@ -23,5 +23,11 @@ const optionsObj: OptionsKnobOptions = {
 storiesOf('User', module)
     .addDecorator(withKnobs)
     .add('User', () => (
-        <User Id="SomeId" Name="Bob" Vote={optionsKnob('Vote', voteValues, 3, optionsObj)} IsVoteRevealed={boolean('IsVoteRevealed', false)} />
+        <User
+            Id="SomeId"
+            Name="Bob"
+            Vote={optionsKnob('Vote', voteValues, 3, optionsObj)}
+            IsVoteRevealed={boolean('IsVoteRevealed', false)}
+            IsMe={boolean('IsMe', false)}
+        />
     ));

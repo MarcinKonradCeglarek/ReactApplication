@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-      "baseUrl": ".",
-      "paths": { "*": ["types/*"] },
+    "baseUrl": ".",
     "target": "es5",
     "lib": [
       "dom",

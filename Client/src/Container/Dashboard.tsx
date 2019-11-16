@@ -34,6 +34,7 @@ class Dashboard extends Component<DashboardProps & DashboardDispatch> {
                 IsVoteRevealed={this.props.IsVoteRevealed}
                 Users={this.props.Users}
                 CurrentUsername={this.props.CurrentUsername}
+                CurrentUserId={this.props.CurrentUserId}
                 StoryReset={this.props.StoryReset}
                 StoryReveal={this.props.StoryReveal}
                 UserRename={this.userRename}

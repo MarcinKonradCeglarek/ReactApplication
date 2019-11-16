@@ -21,7 +21,7 @@ class App extends React.Component<AppProps> {
             <ThemeProvider theme={theme}>
                 <Provider store={store}>
                     <div className="App">
-                        <Grid container spacing={3} direction="column">
+                        <Grid container spacing={3} direction="column" alignContent={'space-between'}>
                             <Grid item xs={12}>
                                 <Dashboard />
                             </Grid>
