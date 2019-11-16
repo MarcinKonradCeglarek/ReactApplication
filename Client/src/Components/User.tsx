@@ -3,6 +3,8 @@ import { Theme } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import { orange, blue } from '@material-ui/core/colors';
 import classnames from 'classnames';
+import ErrorIcon from '@material-ui/icons/Error';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -35,7 +37,7 @@ class Card extends React.PureComponent<UserProps> {
     render() {
         const classes = this.props.classes;
 
-        const vote = this.props.Vote ? (this.props.IsVoteRevealed ? this.props.Vote : '!!!') : '...';
+        const vote = this.props.Vote ? this.props.IsVoteRevealed ? this.props.Vote : <ErrorIcon /> : '...';
 
         return (
             <div className={classnames({ [classes.wrapper]: true, [classes.myUser]: this.props.IsMe })}>

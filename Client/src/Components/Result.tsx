@@ -12,6 +12,8 @@ const styles = (theme: Theme) =>
             justifyContent: 'center',
             backgroundColor: red[900],
             width: '100px',
+            border: '3px solid white',
+            borderRadius: '5px',
         },
         result: {
             color: theme.palette.common.white,

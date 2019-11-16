@@ -6,6 +6,10 @@ import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 const styles = (theme: Theme) =>
     createStyles({
         wrapper: {
+            position: 'relative',
+            bottom: '-200px',
+        },
+        container: {
             display: 'flex',
             justifyContent: 'center',
             height: 'calc(100% - 500px)',
@@ -26,9 +30,11 @@ class Cards extends React.Component<CardsProps> {
         const supportedNumbers = [1, 2, 3, 5, 8, 13, 21];
         return (
             <div className={this.props.classes.wrapper}>
-                {supportedNumbers.map(n => (
-                    <Card key={`Card_${n}`} Value={n} onClick={this.handleCardSelection.bind(this)} IsSelected={this.props.SelectedValue === n} />
-                ))}
+                <div className={this.props.classes.container}>
+                    {supportedNumbers.map(n => (
+                        <Card key={`Card_${n}`} Value={n} onClick={this.handleCardSelection.bind(this)} IsSelected={this.props.SelectedValue === n} />
+                    ))}
+                </div>
             </div>
         );
     }

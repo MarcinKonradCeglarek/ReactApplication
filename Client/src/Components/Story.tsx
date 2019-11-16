@@ -79,7 +79,9 @@ class Story extends React.PureComponent<StoryProps & StoryDispatch & WithStyles<
                     </Grid>
 
                     <Grid item xs={4} md={2}>
-                        <Result IsStoryRevealsed={this.props.IsVoteRevealed} Users={this.props.Users} />
+                        <div className={classes.paper}>
+                            <Result IsVoteRevealed={this.props.IsVoteRevealed} Users={this.props.Users} />
+                        </div>
                     </Grid>
 
                     <Grid item xs={8} md={3}>
