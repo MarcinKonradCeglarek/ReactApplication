@@ -3,11 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@dump247/storybook-state": "^1.6.1",
     "@material-ui/core": "^4.6.0",
     "@material-ui/icons": "^4.5.1",
     "@types/classnames": "^2.2.9",
-    "@types/jest": "^24.0.22",
     "@types/node": "^12.12.7",
     "@types/react": "^16.9.11",
     "@types/react-addons-update": "^0.14.20",
@@ -24,7 +22,6 @@
     "react-scripts": "3.2.0",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
-    "redux-actions-ts-reducer": "^0.2.0",
     "redux-logger": "^3.0.6",
     "socket.io-client": "^2.3.0",
     "typescript": "^3.7.2"
@@ -53,12 +50,14 @@
     ]
   },
   "devDependencies": {
+    "@dump247/storybook-state": "^1.6.1",
     "@storybook/addon-actions": "^5.2.6",
     "@storybook/addon-info": "^5.2.6",
     "@storybook/addon-knobs": "^5.2.6",
     "@storybook/addon-links": "^5.2.6",
     "@storybook/addons": "^5.2.6",
     "@storybook/react": "^5.2.6",
+    "@types/jest": "^24.0.23",
     "awesome-typescript-loader": "^5.2.1",
     "jest": "^24.9.0",
     "react-docgen-typescript-loader": "^3.3.0",

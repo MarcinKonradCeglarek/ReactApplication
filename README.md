@@ -56,6 +56,8 @@
 
 Working example: https://codesandbox.io/s/w02m7jm3q7
 
+### redux-logger
+
 ### React Immutability Helpers - https://reactjs.org/docs/update.html
 
 https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-specific-array-item-in-redux
