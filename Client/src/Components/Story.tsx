@@ -2,6 +2,7 @@ import React from 'react';
 import { Theme, Button, Grid } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import User from './User';
+import Result from './Result';
 import { UserData, Id } from '../Store';
 
 const styles = (theme: Theme) =>
@@ -16,7 +17,7 @@ const styles = (theme: Theme) =>
             display: 'flex',
         },
         button: {
-            marginLeft: '8px',
+            margin: '8px',
         },
         paper: {
             padding: theme.spacing(5),
@@ -71,13 +72,17 @@ class Story extends React.PureComponent<StoryProps & StoryDispatch & WithStyles<
         return (
             <div className={classes.wrapper}>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} md={8}>
+                    <Grid item xs={12} md={7}>
                         <div className={classes.paper}>
                             <h2>{this.props.Title}&nbsp;</h2>
                         </div>
                     </Grid>
 
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={4} md={2}>
+                        <Result IsStoryRevealsed={this.props.IsVoteRevealed} Users={this.props.Users} />
+                    </Grid>
+
+                    <Grid item xs={8} md={3}>
                         <div className={classes.paper}>
                             <Button className={classes.button} variant="contained" color="primary" onClick={this.renameStory}>
                                 Set title

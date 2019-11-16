@@ -23,7 +23,7 @@ class Cards extends React.Component<CardsProps> {
     };
 
     render() {
-        const supportedNumbers = [1, 2, 3, 5, 8, 13];
+        const supportedNumbers = [1, 2, 3, 5, 8, 13, 21];
         return (
             <div className={this.props.classes.wrapper}>
                 {supportedNumbers.map(n => (
