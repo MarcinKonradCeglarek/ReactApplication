@@ -35,12 +35,13 @@
 
 - create client/.storybook/webpack.config.js   (contents are on link above)
 - modify client/.storybook/config.js   (change from .jsx to .tsx)
+- ceate new story with .tsx extension :)
 
 #### Storybook state https://github.com/dump247/storybook-state
 
     yarn add -D @dump247/storybook-state
 
-- Add import '@storybook/addon-knobs/register'; to addons.js
+- Add `import '@storybook/addon-knobs/register';` to `client/.storybook/addons.js`
 
 #### Storybook knobs https://github.com/storybookjs/storybook/tree/master/addons/knobs
 
