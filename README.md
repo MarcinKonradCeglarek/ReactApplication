@@ -27,67 +27,93 @@
 
 Open Visual Studio Code, navigate to folder where you'd like to create your application. Press `ctrl + ~` to open terminal (powershell) and inter those commands:
 
-    ```javascript
-    yarn global add create-react-app        // installs create-react-app script **globally** on machine
-    mkdir *client*                          // create-react-app will fail if folder doesn't start with lowercase
-    create-react-app *client*
-    cd *client*
-    yarn                                    // download all dependencies into node_modules
-    yarn start                              // starts development server (watch)
-    yarn test                               // runs tests (watch)
-    ```
+```javascript
+yarn global add create-react-app        // installs create-react-app script **globally** on machine
+mkdir client                            // create-react-app will fail if folder doesn't start with lowercase
+create-react-app client
+cd client
+yarn                                    // download all dependencies into node_modules
+yarn start                              // starts development server (watch)
+yarn test                               // runs tests (watch)
+```
 
 ## HelloWorld component
 
 Create file `helloworld.jsx` in `client\components` folder. Inside create a simple react component that can be later mounted in App:
 
-    ```typescript
-    class HelloWorld extends React.Component {
-        render() {
+```typescript
+class HelloWorld extends React.Component {
+    render() {
         return <h1>Hello, {this.props.name}</h1>;
-        }
     }
-    ```
+}
+```
 
 Add proper import to App.js and include new component in it's render method:
 
-    ```typescript
-    import HelloWorld from './components/helloworld'
-    ```
+```typescript
+import HelloWorld from './components/helloworld'
+```
 
 ## TypeScript
 
 Detailed instruction can be found [on create-react-app website](https://create-react-app.dev/docs/adding-typescript/)
 
-    ```javascript
-    yarn global add tslint typescript
-    yarn add typescript @types/node @types/react @types/react-dom @types/jest
+```javascript
+yarn global add tslint typescript
+yarn add typescript @types/node @types/react @types/react-dom @types/jest
+```
+
+- rename `App.js` => `App.tsx` (`.ts` won't work, since App uses JSX syntax)
+- modify existing HelloWorld component to use TypeScript:
+
+    ```typescript
+    import React from 'react';
+    import { createStyles, WithStyles, withStyles, Theme } from '@material-ui/core/styles';
+
+    const styles = (theme: Theme) =>
+        createStyles({
+            wrapper: {
+                backgroundColor: theme.palette.primary.main,
+            },
+        });
+
+    interface HelloWorldProps {
+        name: string;
+    }
+
+    class HelloWorld extends React.Component<HelloWorldProps & WithStyles<typeof styles, true>> {
+        render() {
+            return <h1 className={this.props.classes.wrapper}>Hello, {this.props.name}</h1>;
+        }
+    }
+
+    export default withStyles(styles, { withTheme: true })(HelloWorld);
     ```
 
-- rename App.js => App.tsx (ts won't work, since App uses JSX syntax)
 - restart development server  (yarn start)
 
 ## Material UI and Icons
 
 We will be adding [material ui](https://material-ui.com/) since it's good support.
 
-    ```javascript
-    yarn add @material-ui/core @material-ui/icons
-    ```
+```javascript
+yarn add @material-ui/core @material-ui/icons
+```
 
 ## Storybook with TypeScript
 
 Detailed instructions can be found [on storybook website](https://storybook.js.org/docs/guides/guide-react/)
 
-    ```javascript
-    npx -p @storybook/cli sb init --type react
-    ```
+```javascript
+npx -p @storybook/cli sb init --type react
+```
 
 [Typescript configuration](https://storybook.js.org/docs/configurations/typescript-config/)
 
-    ```javascript
-    yarn add -D typescript awesome-typescript-loader @storybook/addon-info react-docgen-typescript-loader jest "@types/jest" ts-jest
-    ```
+```javascript
+yarn add -D typescript awesome-typescript-loader @storybook/addon-info react-docgen-typescript-loader jest "@types/jest" ts-jest
+```
 
 - create `client/.storybook/webpack.config.js` with this contents:
 
@@ -132,68 +158,68 @@ Detailed instructions can be found [on storybook website](https://storybook.js.o
 
 Add support for [Knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs)
 
-    ```javascript
-    yarn add @storybook/addon-knobs --dev
-    ```
+```javascript
+yarn add @storybook/addon-knobs --dev
+```
 
 - Add `import '@storybook/addon-knobs/register';` to `client/.storybook/addons.js`
 
 Adding knobs to the story, require adding a decorator and import:
 
-    ```typescript
-    ...
-    **import { text, withKnobs, boolean, number } from '@storybook/addon-knobs';**
+```typescript
+...
+import { text, withKnobs, boolean, number } from '@storybook/addon-knobs';
 
-    storiesOf('Cards', module)
-        **.addDecorator(withKnobs)**
-        .add('Single card', () => <Card Title={text('Title', 'Test title')} />);
-    ```
+storiesOf('Cards', module)
+    .addDecorator(withKnobs)            // add decorator here
+    .add('Single card', () => <Card Title={text('Title', 'Test title')} />);
+```
 
 ### Storybook/state
 
 To add support for [Storybook/State](https://github.com/dump247/storybook-state)
 
-    ```javascript
-    yarn add @dump247/storybook-state --dev
-    ```
+```javascript
+yarn add @dump247/storybook-state --dev
+```
 
 Modify a story to add state object
 
-    ```typescript
-    storiesOf('Cards', module)
-        .addDecorator(withKnobs)
-        .add(
-            'Card with knobs and store',
-            **withState({ IsSelected: false })(({ store }) => (**
-                <Card
-                    Value={number('Value', 3)}
-                    IsSelected={**store.state.IsSelected**}
-                    onClick={() => {
-                        **store.set({ IsSelected: !store.state.IsSelected });**
-                        action('clicked');
-                    }}
-                />
-            ))
-        )
-    ```
+```typescript
+storiesOf('Cards', module)
+    .addDecorator(withKnobs)
+    .add(
+        'Card with knobs and store',
+        withState({ IsSelected: false })(({ store }) => (
+            <Card
+                Value={number('Value', 3)}
+                IsSelected={store.state.IsSelected}
+                onClick={() => {
+                    store.set({ IsSelected: !store.state.IsSelected });
+                    action('clicked');
+                }}
+            />
+        ))
+    )
+```
 
 ## Classnames
 
 You can use [Classnames](https://www.npmjs.com/package/classnames) for Easier management of conditional classes in JSX components
 
-    ```javascript
-    yarn add classnames @types/classnames
-    ```
+```javascript
+yarn add classnames @types/classnames
+```
 
 If you want to switch classes from `normal` to `selected` but always keep `card` class on target object, this will be proper syntax using `classnames`:
 
-    ```typescript
-    var wrapperClasses = classNames({
-        [classes.card]: true,
-        [classes.selected]: this.props.IsSelected,
-        [classes.normal]: !this.props.IsSelected,
-    });
-    ```
+```typescript
+var wrapperClasses = classNames({
+    [classes.card]: true,
+    [classes.selected]: this.props.IsSelected,
+    [classes.normal]: !this.props.IsSelected,
+});
+```
 
 ## Redux
 
@@ -201,7 +227,9 @@ If you want to switch classes from `normal` to `selected` but always keep `card`
 
 ## Redux - https://redux.js.org/recipes/usage-with-typescript
 
-    yarn add redux-actions @types/redux-actions
+```javascript
+yarn add redux-actions @types/redux-actions
+```
 
 Working example: https://codesandbox.io/s/w02m7jm3q7
 
