@@ -27,6 +27,7 @@
 
 Open Visual Studio Code, navigate to folder where you'd like to create your application. Press `ctrl + ~` to open terminal (powershell) and inter those commands:
 
+    ```javascript
     yarn global add create-react-app        // installs create-react-app script **globally** on machine
     mkdir *client*                          // create-react-app will fail if folder doesn't start with lowercase
     create-react-app *client*
@@ -34,27 +35,34 @@ Open Visual Studio Code, navigate to folder where you'd like to create your appl
     yarn                                    // download all dependencies into node_modules
     yarn start                              // starts development server (watch)
     yarn test                               // runs tests (watch)
+    ```
 
 ## HelloWorld component
 
 Create file `helloworld.jsx` in `client\components` folder. Inside create a simple react component that can be later mounted in App:
 
+    ```typescript
     class HelloWorld extends React.Component {
-      render() {
+        render() {
         return <h1>Hello, {this.props.name}</h1>;
-      }
+        }
     }
+    ```
 
 Add proper import to App.js and include new component in it's render method:
 
+    ```typescript
     import HelloWorld from './components/helloworld'
+    ```
 
 ## TypeScript
 
 Detailed instruction can be found [on create-react-app website](https://create-react-app.dev/docs/adding-typescript/)
 
+    ```javascript
     yarn global add tslint typescript
     yarn add typescript @types/node @types/react @types/react-dom @types/jest
+    ```
 
 - rename App.js => App.tsx (ts won't work, since App uses JSX syntax)
 - restart development server  (yarn start)
@@ -63,20 +71,27 @@ Detailed instruction can be found [on create-react-app website](https://create-r
 
 We will be adding [material ui](https://material-ui.com/) since it's good support.
 
+    ```javascript
     yarn add @material-ui/core @material-ui/icons
+    ```
 
 ## Storybook with TypeScript
 
 Detailed instructions can be found [on storybook website](https://storybook.js.org/docs/guides/guide-react/)
 
+    ```javascript
     npx -p @storybook/cli sb init --type react
+    ```
 
 [Typescript configuration](https://storybook.js.org/docs/configurations/typescript-config/)
 
+    ```javascript
     yarn add -D typescript awesome-typescript-loader @storybook/addon-info react-docgen-typescript-loader jest "@types/jest" ts-jest
+    ```
 
 - create `client/.storybook/webpack.config.js` with this contents:
 
+    ```typescript
     module.exports = ({ config }) => {
         config.module.rules.push({
             test: /\.(ts|tsx)$/,
@@ -93,13 +108,17 @@ Detailed instructions can be found [on storybook website](https://storybook.js.o
         config.resolve.extensions.push('.ts', '.tsx');
         return config;
     };
+    ```
 
 - modify `client/.storybook/config.js`  change line 4 to:
 
+    ```typescript
     configure(require.context('../stories', true, /\.stories\.tsx$/), module);
+    ```
 
-- ceate new story with `.tsx` extension:
+- ceate new story with `.tsx` extension
 
+    ```typescript
     import React from 'react';
     import { storiesOf } from '@storybook/react';
     import Card from '../src/components/card';
@@ -107,32 +126,40 @@ Detailed instructions can be found [on storybook website](https://storybook.js.o
     storiesOf('Cards', module).add('Single card', () => (
         <Card Value={3} IsSelected={false} onSelection={val => {}} />
     ));
+    ```
 
 ### Storybook/knobs
 
 Add support for [Knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs)
 
+    ```javascript
     yarn add @storybook/addon-knobs --dev
+    ```
 
 - Add `import '@storybook/addon-knobs/register';` to `client/.storybook/addons.js`
 
 Adding knobs to the story, require adding a decorator and import:
 
+    ```typescript
     ...
     **import { text, withKnobs, boolean, number } from '@storybook/addon-knobs';**
 
     storiesOf('Cards', module)
         **.addDecorator(withKnobs)**
         .add('Single card', () => <Card Title={text('Title', 'Test title')} />);
+    ```
 
 ### Storybook/state
 
 To add support for [Storybook/State](https://github.com/dump247/storybook-state)
 
+    ```javascript
     yarn add @dump247/storybook-state --dev
+    ```
 
-Modify a story to add state object: 
+Modify a story to add state object
 
+    ```typescript
     storiesOf('Cards', module)
         .addDecorator(withKnobs)
         .add(
@@ -148,20 +175,25 @@ Modify a story to add state object:
                 />
             ))
         )
+    ```
 
 ## Classnames
 
 You can use [Classnames](https://www.npmjs.com/package/classnames) for Easier management of conditional classes in JSX components
 
+    ```javascript
     yarn add classnames @types/classnames
+    ```
 
 If you want to switch classes from `normal` to `selected` but always keep `card` class on target object, this will be proper syntax using `classnames`:
 
+    ```typescript
     var wrapperClasses = classNames({
         [classes.card]: true,
         [classes.selected]: this.props.IsSelected,
         [classes.normal]: !this.props.IsSelected,
     });
+    ```
 
 ## Redux
 
