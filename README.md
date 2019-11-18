@@ -3,8 +3,9 @@
 ## using create-react-app
 
     npm install -g create-react-app
-    create-react-app <folderPath>
-    cd <folderPath>
+    mkdir client
+    create-react-app client
+    cd client
     yarn                         // download all dependencies into node_modules
     yarn start                   // starts development server (watch)
 
@@ -31,6 +32,9 @@
 #### Configuring storybook to use typescript: https://storybook.js.org/docs/configurations/typescript-config/
 
     yarn add -D typescript awesome-typescript-loader @storybook/addon-info react-docgen-typescript-loader jest "@types/jest" ts-jest
+
+- create client/.storybook/webpack.config.js   (contents are on link above)
+- modify client/.storybook/config.js   (change from .jsx to .tsx)
 
 #### Storybook state https://github.com/dump247/storybook-state
 
