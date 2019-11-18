@@ -1,12 +1,14 @@
-# Creating Plannng Poker app from scratch
+# Creating Planing Poker app from scratch
 
 ## using create-react-app
 
     npm install -g create-react-app
     create-react-app <folderPath>
-    yarn start
+    cd <folderPath>
+    yarn                         // download all dependencies into node_modules
+    yarn start                   // starts development server (watch)
 
-    yarn test
+    yarn test                    // runs tests (watch)
 
 ## adding [material ui](https://material-ui.co)
 
@@ -14,14 +16,11 @@
 
 ## Adding typescript support to existing application (https://create-react-app.dev/docs/adding-typescript/)
 
+    yarn global add tslint typescript
     yarn add typescript @types/node @types/react @types/react-dom @types/jest
 
 - rename App.js => App.tsx (ts won't work, since App uses JSX syntax)
-- restart development server
-
-## Addint TSLint (https://palantir.github.io/tslint/)
-
-    yarn global add tslint typescript
+- restart development server  (yarn start)
 
 ## Things we will use for development
 
