@@ -13,7 +13,7 @@
   - [Redux](#redux)
   - [Redux - https://redux.js.org/recipes/usage-with-typescript](#redux---httpsreduxjsorgrecipesusage-with-typescript)
     - [redux-logger](#redux-logger)
-    - [React Immutability Helpers - https://reactjs.org/docs/update.html](#react-immutability-helpers---httpsreactjsorgdocsupdatehtml)
+    - [React Immutability Helpers](#react-immutability-helpers)
   - [Socket.io](#socketio)
 
 ## Prerequisites
@@ -55,6 +55,8 @@ Add proper import to App.js and include new component in it's render method:
 import HelloWorld from './components/helloworld'
 ```
 
+____
+
 ## TypeScript
 
 Detailed instruction can be found [on create-react-app website](https://create-react-app.dev/docs/adding-typescript/)
@@ -93,6 +95,8 @@ yarn add typescript @types/node @types/react @types/react-dom @types/jest
 
 - restart development server  (yarn start)
 
+____
+
 ## Material UI and Icons
 
 We will be adding [material ui](https://material-ui.com/) since it's good support.
@@ -100,6 +104,8 @@ We will be adding [material ui](https://material-ui.com/) since it's good suppor
 ```javascript
 yarn add @material-ui/core @material-ui/icons
 ```
+
+____
 
 ## Storybook with TypeScript
 
@@ -203,6 +209,8 @@ storiesOf('Cards', module)
     )
 ```
 
+____
+
 ## Classnames
 
 You can use [Classnames](https://www.npmjs.com/package/classnames) for Easier management of conditional classes in JSX components
@@ -221,6 +229,8 @@ var wrapperClasses = classNames({
 });
 ```
 
+____
+
 ## Redux
 
 **Notes**: https://stackoverflow.com/questions/53111195/typescript-with-classnames-no-index-signature
@@ -233,9 +243,59 @@ yarn add redux-actions @types/redux-actions
 
 Working example: https://codesandbox.io/s/w02m7jm3q7
 
+- Create store
+
+    ````typescript
+    export type Id = string;
+
+    export interface StoryState {
+        Title: string;
+        IsVoteRevealed: boolean;
+    }
+
+    export interface UserData {
+        id: Id;
+        name: string;
+        vote: number | null;
+    }
+
+    export interface UserState {
+        currentUserId: Id;
+        users: Array<UserData>;
+    }
+
+    export interface StoreState {
+        story: StoryState;
+        users: UserState;
+    }
+    ````
+
+- Create actions
+  - UserCreate
+  - UserDelete
+  - UserRename
+  - UserVote
+  - StoryReveal
+  - StoryReset
+- Create reducers
+  - StoryReducer
+  - UserReducer 
+
 ### redux-logger
 
-### React Immutability Helpers - https://reactjs.org/docs/update.html
+Redux logger outputs each action (and state) to console
+
+```javascript
+yarn add redux-logger
+```
+
+### React Immutability Helpers
+
+In order to modify state without mutating it (required for Redux state) we can use [react imutability helper](https://github.com/kolodny/immutability-helper). If they're used incorreclty they can break TypeScript!
+
+```javascript
+yarn add immutability-helper
+```
 
 https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-specific-array-item-in-redux
 
