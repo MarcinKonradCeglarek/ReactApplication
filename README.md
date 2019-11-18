@@ -41,16 +41,22 @@
 
     yarn add -D @dump247/storybook-state
 
-- Add `import '@storybook/addon-knobs/register';` to `client/.storybook/addons.js`
 
 #### Storybook knobs https://github.com/storybookjs/storybook/tree/master/addons/knobs
 
     yarn add @storybook/addon-knobs --dev
 
+- Add `import '@storybook/addon-knobs/register';` to `client/.storybook/addons.js`
+
+Working story: 
+
+    storiesOf('Cards', module)
+        .addDecorator(withKnobs)
+        .add('Single card', () => <Card Title={text('Title', 'Test title')} />);
+
 ### Classnames: https://www.npmjs.com/package/classnames
 
-    yarn add classnames
-    yarn add @types/classnames (not required, but there are warnings if you don't do this)
+    yarn add classnames @types/classnames
 
 **Notes**: https://stackoverflow.com/questions/53111195/typescript-with-classnames-no-index-signature
 
