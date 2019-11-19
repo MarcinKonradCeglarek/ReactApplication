@@ -240,6 +240,24 @@ ____
 yarn add redux-actions @types/redux-actions
 ```
 
+### redux-logger
+
+Redux logger outputs each action (and state) to console
+
+```javascript
+yarn add redux-logger
+```
+
+### immutability-helper
+
+In order to modify state without mutating it (required for Redux state) we can use [react imutability helper](https://github.com/kolodny/immutability-helper). If they're used incorreclty they can break TypeScript!
+
+```javascript
+yarn add immutability-helper
+```
+
+https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-specific-array-item-in-redux
+
 - Create store
 
     ````typescript
@@ -306,6 +324,10 @@ yarn add redux-actions @types/redux-actions
   - UserReducer
 
     ```typescript
+    import { UserState, UserData } from '..';
+    import { USER_VOTE, Actions } from '../Actions/types';
+    import update from 'immutability-helper';
+
     export const initialUserState: UserState = {
         currentUserId: 'aaa',
         users: [ { id: 'aaa', name: 'Bob', vote: null } ],
@@ -437,24 +459,6 @@ yarn add redux-actions @types/redux-actions
         }
     }
     ```
-
-### redux-logger
-
-Redux logger outputs each action (and state) to console
-
-```javascript
-yarn add redux-logger
-```
-
-### immutability-helper
-
-In order to modify state without mutating it (required for Redux state) we can use [react imutability helper](https://github.com/kolodny/immutability-helper). If they're used incorreclty they can break TypeScript!
-
-```javascript
-yarn add immutability-helper
-```
-
-https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-specific-array-item-in-redux
 
 ## Socket.io
 
