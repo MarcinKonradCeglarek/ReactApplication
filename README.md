@@ -172,7 +172,7 @@ yarn add @storybook/addon-knobs --dev
 Adding knobs to the story, require adding a decorator and import:
 
 ```typescript
-...
+/* ... */
 import { text, withKnobs, boolean, number } from '@storybook/addon-knobs';
 
 storiesOf('Cards', module)
@@ -283,7 +283,7 @@ yarn add redux-actions @types/redux-actions
         vote: number;
     }
 
-    export type Actions = ... | UserVoteAction;
+    export type Actions = /* ... */ | UserVoteAction;
     ```
 
 - Create actionCreators in `client\src\store\actions\index.ts`
@@ -308,7 +308,7 @@ yarn add redux-actions @types/redux-actions
     ```typescript
     export function userReducer(state = initialUserState, action: Actions): UserState {
         switch (action.type) {
-            ...
+            /* ... */
             case USER_VOTE:
                 if (!state.users.find(u => u.id === action.id)) {
                     return state;
