@@ -663,6 +663,7 @@ We will not care about potential failures. All of our actions will be Requests (
 
     ```typescript
     import socketIO from 'socket.io-client';
+    import socketIoMiddleware from './middleware/sockets.io-client';
 
     /* ... */
 
