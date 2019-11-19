@@ -5,10 +5,6 @@ var io = require("socket.io")(server);
 server.listen(80);
 // WARNING: app.listen(80) will NOT work here!
 
-app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/index.html");
-});
-
 let users = [];
 let story = {
   Title: "(no title)",
@@ -55,9 +51,15 @@ io.on("connection", function(socket) {
         };
         break;
     }
+
+    // deleting isRequest property from incoming action before forwarding
     delete payload.isRequest;
     console.log(payload);
+
+    // broadcast to everyone but client
     socket.broadcast.emit("action", payload);
+
+    // broadcast to client
     socket.emit("action", payload);
   });
 });

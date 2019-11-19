@@ -13,7 +13,10 @@
   - [Redux](#redux)
     - [redux-logger](#redux-logger)
     - [immutability-helper](#immutability-helper)
-  - [Socket.io](#socketio)
+  - [React component lifecycle](#react-component-lifecycle)
+  - [Client-Server support](#client-server-support)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
 
 ## Prerequisites
 
@@ -476,6 +479,182 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     }
     ```
 
-## Socket.io
+## React component lifecycle
 
-https://medium.com/dailyjs/combining-react-with-socket-io-for-real-time-goodness-d26168429a34
+Full article: https://programmingwithmosh.com/javascript/react-lifecycle-methods/
+
+[React component lifecycle](https://i0.wp.com/programmingwithmosh.com/wp-content/uploads/2018/10/Screen-Shot-2018-10-31-at-1.44.28-PM.png?ssl=1 "React component lifecycle")
+
+- The render() is the most used lifecycle method.
+  - It is a pure function.
+  - You cannot set state in render()
+- The componentDidMount() happens as soon as your component is mounted.
+  - You can set state here but with caution.
+  - This is a good place to initiate API calls and invoke actions
+- The componentDidUpdate(prevProps) happens as soon as the updating happens.
+  - You can set state here but with caution.
+- The componentWillUnmount() happens just before the component unmounts and is destroyed.
+  - This is a good place to cleanup all the data.
+  - You cannot set state here.
+
+## Client-Server support
+
+From front-end we will emit actions to backend, which will reflect them to each connected client, so state is consistent for everybody
+
+### Backend
+
+We will use express generator to create template for backend application. We will be using `npm` for this one (as `npm` is set up by default by express-generator)
+
+```javascript
+cd server
+npx express-generator
+npm install --save socket.io
+```
+
+We will update app.js file:
+
+```javascript
+var app = require("express")();
+var server = require("http").Server(app);
+var io = require("socket.io")(server);
+
+// WARNING: app.listen(80) will NOT work here!
+server.listen(80);
+
+// Initial state (required to be sent to connecting clients for consistency)
+let users = [];
+let story = {
+  Title: "(no title)",
+  IsVoteRevealed: false
+};
+
+io.on("connection", function(socket) {
+  console.log(
+    "Connected: " +
+      socket.client.conn.id +
+      ". Sending " +
+      users.length +
+      " users and story"
+  );
+
+  // on connection send initial state
+  socket.emit("action", { type: "USER_INIT", users: users });
+  socket.emit("action", { type: "STORY_INIT", story: story });
+
+  // on receiving action, modify current state
+  socket.on("action", function(payload) {
+    switch (payload.type) {
+      case "USER_CREATE":
+        users.push({ id: payload.id, name: payload.name, vote: null });
+        break;
+      case "USER_DELETED":
+        let deletedIndex = users.findIndex(u => u.id === payload.id);
+        users = users.splice(deletedIndex, 1);
+        break;
+      case "USER_VOTE":
+        let voteIndex = users.findIndex(u => u.id === payload.id);
+        users[voteIndex].vote = payload.vote;
+        break;
+      case "USER_RENAME":
+        let renameIndex = users.findIndex(u => u.id === payload.id);
+        users[renameIndex].name = payload.newName;
+        break;
+      case "STORY_RENAME":
+        story.Title = payload.newTitle;
+        break;
+      case "STORY_REVEAL":
+        story.IsVoteRevealed = true;
+        break;
+      case "STORY_RESET":
+        story = {
+          Title: "(no title)",
+          IsVoteRevealed: false
+        };
+        break;
+    }
+
+    // deleting isRequest property from incoming action before forwarding
+    delete payload.isRequest;
+    console.log(payload);
+
+    // broadcast to everyone but client
+    socket.broadcast.emit("action", payload);
+
+    // broadcast to client
+    socket.emit("action", payload);
+  });
+});
+
+module.exports = app;
+```
+
+### Frontend
+
+Usually API requests require 3 actions:
+
+- API_REQUEST - reducers might note that request has gone off (loader? disabled button)
+- API_REQUEST_SUCCESS (with data) - reducers will unblock buttons/loaders and user new data
+- API_REQUEST_FAILURE (with reason/excepion) - reducers will unblock buttons/loaders and notify about errors
+
+We will not care about potential failures. All of our actions will be Requests (and will not be processed by reducers) and we will only process Responses (reflected actions) from Backend.
+
+- Add socket.io client:
+
+    ```javascript
+    yarn add socket.io-client
+    ```
+
+- Modify all Request actions to extend also BroadcastableAction in `client\src\store\actions\types.ts`
+
+    ```typescript
+    interface BroadcastableAction {
+        isRequest: true;
+    }
+
+    /* ... */
+
+    export const USER_VOTE = 'USER_VOTE';
+    interface UserVoteAction {
+        type: typeof USER_VOTE;
+        id: Id;
+        vote: number;
+    }
+    interface UserVoteRequest extends UserVoteAction, BroadcastableAction {}
+    interface UserVoteResponse extends UserVoteAction {}
+
+    /* ... */
+
+    export type Requests =
+        | UserVoteRequest
+        /* ... */;
+
+    export type Responses =
+        | UserVoteResponse
+        /* ... */;
+    ```
+
+- Add socket.io-client middleware to store `client\src\store\index.ts`:
+
+    ```typescript
+    import socketIO from 'socket.io-client';
+
+    /* ... */
+
+    const io = socketIO.connect(`http://localhost:80`);
+
+    /* ... */
+
+    export default function CreateStore() {
+        return createStore(rootReducer, initialState, compose(applyMiddleware(socketIoMiddleware(io), logger)));
+    }
+    ```
+
+- Change reducers so they only accept actions of type Responses:
+
+    ```typescript
+    /* ... */
+
+    export function storyReducer(state = initialStoryState, action: Responses): StoryState {
+        /* ... */
+    }
+    ```
