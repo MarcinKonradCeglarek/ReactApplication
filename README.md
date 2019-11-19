@@ -250,6 +250,14 @@ Redux logger outputs each action (and state) to console
 yarn add redux-logger @types/redux-logger
 ```
 
+After adding package you need to configure store to use logger as middleware in `client\src\store\index.ts` file. Don't do this yet, it will be explained below.
+
+```typescript
+export default function CreateStore() {
+    return createStore(rootReducer, initialState, compose(applyMiddleware(logger)));
+}
+```
+
 ### immutability-helper
 
 In order to modify state without mutating it (required for Redux state) we can use [react imutability helper](https://github.com/kolodny/immutability-helper). If they're used incorreclty they can break TypeScript!
@@ -260,7 +268,7 @@ yarn add immutability-helper
 
 https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-specific-array-item-in-redux
 
-- Create store schema/structure
+- Create store schema/structure in `client\src\store\model\index.ts`
 
     ````typescript
     export type Id = string;
@@ -303,14 +311,14 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
         vote: number;
     }
 
-    export type Actions = /* ... */ | UserVoteAction;
+    export type Actions = /* All actions that you've created */ | UserVoteAction;
     ```
 
 - Create actionCreators in `client\src\store\actions\index.ts`
 
     ```typescript
     import { Actions, USER_VOTE } from './types';
-    import { Id } from '..';
+    import { Id } from '../model';
 
     export function UserVoteRequest(id: Id, vote: number): Actions {
         return {
@@ -325,7 +333,7 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
   - StoryReducer `client\src\store\reducers\storyReducer.ts`
 
     ```typescript
-    import { StoryState } from "..";
+    import { StoryState } from "../model";
     import { Actions } from "../actions/types";
 
     export const initialStoryState: StoryState = {
@@ -344,7 +352,7 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
   - UserReducer `client\src\store\reducers\userReducer.ts`
 
     ```typescript
-    import { UserState, UserData } from '..';
+    import { UserState, UserData } from '../model';
     import { USER_VOTE, Actions } from '../actions/types';
     import update from 'immutability-helper';
 
@@ -378,34 +386,13 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
 
     ```typescript
     import logger from 'redux-logger';
-    import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-    import storyReducer, { initialStoryState } from './reducers/storyReducer';
     import userReducer, { initialUserState } from './reducers/userReducer';
-
-    export type Id = string;
-
-    export interface StoryState {
-        Title: string;
-        IsVoteRevealed: boolean;
-    }
-
-    export interface UserData {
-        id: Id;
-        name: string;
-        vote: number | null;
-    }
-
-    export interface UserState {
-        currentUserId: Id;
-        users: Array<UserData>;
-    }
-
-    export interface StoreState {
-        story: StoryState;
-        users: UserState;
-    }
+    import storyReducer, { initialStoryState } from './reducers/storyReducer';
+    import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+    import { StoreState } from './model';
 
     const rootReducer = combineReducers({
+        story: storyReducer,
         users: userReducer,
     });
 
@@ -417,7 +404,7 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     };
 
     export default function CreateStore() {
-        return createStore(rootReducer, initialState);
+        return createStore(rootReducer, initialState, compose(applyMiddleware(logger)));
     }
     ```
 
@@ -426,9 +413,9 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     ```typescript
     import React, { Component } from 'react';
     import { connect } from 'react-redux';
-    import { StoreState, UserData } from '../Store';
-    import { UserVoteRequest, UserCreateRequest } from '../store/actions';
-    import Cards from '../Components/Cards';
+    import { StoreState, UserData } from '../store/model';
+    import { UserVoteRequest } from '../store/actions';
+    import Cards from '../components/cards';
 
     interface DeckContainerProps {
         currentUserId: string;
@@ -438,7 +425,6 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
 
     interface DeckContainerDispatch {
         VoteAction: typeof UserVoteRequest;
-        CreateUserAction: typeof UserCreateRequest;
     }
 
     class DeckContainer extends Component<DeckContainerProps & DeckContainerDispatch> {
@@ -463,34 +449,30 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     }
 
     const mapDispatchToProps: DeckContainerDispatch = {
-        VoteAction: UserVoteRequest
+        VoteAction: UserVoteRequest,
     };
 
-    export default connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(DeckContainer);
+    export default connect(mapStateToProps, mapDispatchToProps)(DeckContainer);
     ```
 
 - Inject store using redux Provider into App
 
     ```typescript
+    import React from 'react';
     import { Provider } from 'react-redux';
-    import theme from './Theme';
-    import CreateStore, { StoryState, UserState } from './Store';
-    import Deck from './Container/Deck';
-    import { Grid } from '@material-ui/core';
+    import CreateStore from './store';
+    import Deck from './containers/deck';
 
     const store = CreateStore();
 
-    class App extends React.Component {
+    export default class App extends React.Component {
         render() {
             return (
-                    <Provider store={store}>
-                        <div className="App">
-                            <Deck />
-                        </div>
-                    </Provider>
+                <Provider store={store}>
+                    <div className="App">
+                        <Deck />
+                    </div>
+                </Provider>
             );
         }
     }
