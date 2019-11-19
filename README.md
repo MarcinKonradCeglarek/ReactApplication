@@ -11,9 +11,8 @@
     - [Storybook/state](#storybookstate)
   - [Classnames](#classnames)
   - [Redux](#redux)
-  - [Redux - https://redux.js.org/recipes/usage-with-typescript](#redux---httpsreduxjsorgrecipesusage-with-typescript)
     - [redux-logger](#redux-logger)
-    - [React Immutability Helpers](#react-immutability-helpers)
+    - [immutability-helper](#immutability-helper)
   - [Socket.io](#socketio)
 
 ## Prerequisites
@@ -233,15 +232,13 @@ ____
 
 ## Redux
 
-**Notes**: https://stackoverflow.com/questions/53111195/typescript-with-classnames-no-index-signature
-
-## Redux - https://redux.js.org/recipes/usage-with-typescript
+- https://stackoverflow.com/questions/53111195/typescript-with-classnames-no-index-signature
+- https://redux.js.org/recipes/usage-with-typescript
+- Working example: https://codesandbox.io/s/w02m7jm3q7
 
 ```javascript
 yarn add redux-actions @types/redux-actions
 ```
-
-Working example: https://codesandbox.io/s/w02m7jm3q7
 
 - Create store
 
@@ -270,16 +267,89 @@ Working example: https://codesandbox.io/s/w02m7jm3q7
     }
     ````
 
-- Create actions
+- Create actions in `client\src\store\actions\types.ts`
   - UserCreate
   - UserDelete
   - UserRename
   - UserVote
   - StoryReveal
   - StoryReset
+
+    ```typescript
+    export const USER_VOTE = 'USER_VOTE';
+    interface UserVoteAction {
+        type: typeof USER_VOTE;
+        id: Id;
+        vote: number;
+    }
+
+    export type Actions = ... | UserVoteAction;
+    ```
+
+- Create actionCreators in `client\src\store\actions\index.ts`
+
+    ```typescript
+    import { Actions, USER_VOTE } from './types';
+    import { Id } from '..';
+
+    export function UserVoteRequest(id: Id, vote: number): Actions {
+        return {
+            type: USER_VOTE,
+            isRequest: true,
+            id: id,
+            vote: vote,
+        };
+    }
+    ```
+
 - Create reducers
   - StoryReducer
-  - UserReducer 
+  - UserReducer
+
+    ```typescript
+    export function userReducer(state = initialUserState, action: Responses): UserState {
+        switch (action.type) {
+            ...
+            case USER_VOTE:
+                if (!state.users.find(u => u.id === action.id)) {
+                    return state;
+                }
+
+                let userVoteIndex = state.users.findIndex(u => u.id === action.id);
+                const userWithVote: UserData = update(state.users[userVoteIndex], { vote: { $set: action.vote } });
+                const updatedUsers: UserData[] = update(state.users, {
+                    $splice: [[userVoteIndex, 1, userWithVote]],
+                });
+                return { ...state, users: updatedUsers };
+
+            default:
+                return state;
+        }
+    }
+
+    export default userReducer;
+    ```
+
+- Create store
+
+    ```typescript
+    import logger from 'redux-logger';
+    import { createStore } from 'redux';
+    import storyReducer, { initialStoryState } from './Reducers/storyReducer';
+    import userReducer, { initialUserState } from './Reducers/userReducer';
+
+    export type AppState = ReturnType<typeof rootReducer>;
+
+    export const initialState: StoreState = {
+        story: initialStoryState,
+        users: initialUserState,
+    };
+
+    export default function CreateStore() {
+        return createStore(rootReducer, initialState);
+    }
+
+    ```
 
 ### redux-logger
 
@@ -289,7 +359,7 @@ Redux logger outputs each action (and state) to console
 yarn add redux-logger
 ```
 
-### React Immutability Helpers
+### immutability-helper
 
 In order to modify state without mutating it (required for Redux state) we can use [react imutability helper](https://github.com/kolodny/immutability-helper). If they're used incorreclty they can break TypeScript!
 
