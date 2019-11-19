@@ -234,6 +234,8 @@ ____
 
 ## Redux
 
+![Redux lifecycle](images/redux-lifecycle.png "Redux lifecycle")
+
 - https://stackoverflow.com/questions/53111195/typescript-with-classnames-no-index-signature
 - https://redux.js.org/recipes/usage-with-typescript
 - Working example: https://codesandbox.io/s/w02m7jm3q7
@@ -250,13 +252,9 @@ Redux logger outputs each action (and state) to console
 yarn add redux-logger @types/redux-logger
 ```
 
-After adding package you need to configure store to use logger as middleware in `client\src\store\index.ts` file. Don't do this yet, it will be explained below.
+After adding package you need to configure store to use logger as middleware in `client\src\store\index.ts` file.
 
-```typescript
-export default function CreateStore() {
-    return createStore(rootReducer, initialState, compose(applyMiddleware(logger)));
-}
-```
+![Redux lifecycle with middleware](images/redux-architecture-overview-middleware.png "Redux lifecycle with middleware")
 
 ### immutability-helper
 
