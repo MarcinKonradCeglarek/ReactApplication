@@ -306,7 +306,12 @@ yarn add redux-actions @types/redux-actions
   - UserReducer
 
     ```typescript
-    export function userReducer(state = initialUserState, action: Actions): UserState {
+    export const initialUserState: UserState = {
+        currentUserId: 'aaa',
+        users: [ { id: 'aaa', name: 'Bob', vote: null } ],
+    };
+
+    export default function userReducer(state = initialUserState, action: Actions): UserState {
         switch (action.type) {
             /* ... */
             case USER_VOTE:
@@ -325,8 +330,6 @@ yarn add redux-actions @types/redux-actions
                 return state;
         }
     }
-
-    export default userReducer;
     ```
 
 - Create store
