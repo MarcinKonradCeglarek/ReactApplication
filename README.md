@@ -18,7 +18,9 @@
 ## Prerequisites
 
 - [Visual Studio Code](https://code.visualstudio.com/)
-  - Extensions: Prettier, TSLint
+  - Extensions: 
+    - Prettier   (to enable formattign: `File` => `Preferences` =>  `Settings`, check `Format On Save`)
+    - TSLint
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://yarnpkg.com/lang/en/)
 
@@ -320,18 +322,18 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     ```
 
 - Create reducers
-  - StoryReducer
+  - StoryReducer `client\src\store\reducers\storyReducer.ts`
 
     ```typescript
     import { StoryState } from "..";
-    import { Actions } from "../Actions/types";
+    import { Actions } from "../actions/types";
 
     export const initialStoryState: StoryState = {
         Title: '(no title)',
         IsVoteRevealed: true
     };
 
-    export default function userReducer(state = initialStoryState, action: Actions): StoryState {
+    export default function storyReducer(state = initialStoryState, action: Actions): StoryState {
         switch (action.type) {
             default:
                 return state;
@@ -339,11 +341,11 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     }
     ```
 
-  - UserReducer
+  - UserReducer `client\src\store\reducers\userReducer.ts`
 
     ```typescript
     import { UserState, UserData } from '..';
-    import { USER_VOTE, Actions } from '../Actions/types';
+    import { USER_VOTE, Actions } from '../actions/types';
     import update from 'immutability-helper';
 
     export const initialUserState: UserState = {
@@ -410,7 +412,7 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     export type AppState = ReturnType<typeof rootReducer>;
 
     export const initialState: StoreState = {
-        story: { Title: 'title', IsVoteRevealed: true },
+        story: initialStoryState,
         users: initialUserState,
     };
 
@@ -419,13 +421,13 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     }
     ```
 
-- Create connected component Deck in `client\src\components\deck`
+- Create connected component Deck in `client\src\containers\deck.tsx`
 
     ```typescript
     import React, { Component } from 'react';
     import { connect } from 'react-redux';
     import { StoreState, UserData } from '../Store';
-    import { UserVoteRequest, UserCreateRequest } from '../Store/Actions';
+    import { UserVoteRequest, UserCreateRequest } from '../store/actions';
     import Cards from '../Components/Cards';
 
     interface DeckContainerProps {
@@ -444,12 +446,6 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
             this.props.VoteAction(this.props.currentUserId, newValue);
         };
 
-        componentDidMount() {
-            if (this.props.currentUser === undefined) {
-                this.props.CreateUserAction(this.props.currentUserId, this.props.currentUserId.substr(0, 8));
-            }
-        }
-
         render() {
             return <Cards SelectedValue={this.props.SelectedValue} onSelect={this.onSelect}></Cards>;
         }
@@ -467,8 +463,7 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     }
 
     const mapDispatchToProps: DeckContainerDispatch = {
-        VoteAction: UserVoteRequest,
-        CreateUserAction: UserCreateRequest,
+        VoteAction: UserVoteRequest
     };
 
     export default connect(

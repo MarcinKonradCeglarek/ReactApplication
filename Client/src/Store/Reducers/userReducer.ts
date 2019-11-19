@@ -1,6 +1,6 @@
 import { UserState, UserData } from '..';
 import { USER_RENAME, USER_VOTE, USER_CREATE, STORY_RESET, USER_DELETE, Responses, USER_INIT } from '../Actions/types';
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
