@@ -237,7 +237,7 @@ ____
 - Working example: https://codesandbox.io/s/w02m7jm3q7
 
 ```javascript
-yarn add redux-actions @types/redux-actions
+yarn add redux react-redux redux-actions @types/react-redux @types/redux-actions
 ```
 
 ### redux-logger
@@ -321,6 +321,24 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
 
 - Create reducers
   - StoryReducer
+
+    ```typescript
+    import { StoryState } from "..";
+    import { Actions } from "../Actions/types";
+
+    export const initialStoryState: StoryState = {
+        Title: '(no title)',
+        IsVoteRevealed: true
+    };
+
+    export default function userReducer(state = initialStoryState, action: Actions): StoryState {
+        switch (action.type) {
+            default:
+                return state;
+        }
+    }
+    ```
+
   - UserReducer
 
     ```typescript
@@ -359,8 +377,8 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     ```typescript
     import logger from 'redux-logger';
     import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-    import storyReducer, { initialStoryState } from './Reducers/storyReducer';
-    import userReducer, { initialUserState } from './Reducers/userReducer';
+    import storyReducer, { initialStoryState } from './reducers/storyReducer';
+    import userReducer, { initialUserState } from './reducers/userReducer';
 
     export type Id = string;
 
