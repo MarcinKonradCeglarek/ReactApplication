@@ -245,7 +245,7 @@ yarn add redux-actions @types/redux-actions
 Redux logger outputs each action (and state) to console
 
 ```javascript
-yarn add redux-logger
+yarn add redux-logger @types/redux-logger
 ```
 
 ### immutability-helper
@@ -258,7 +258,7 @@ yarn add immutability-helper
 
 https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-specific-array-item-in-redux
 
-- Create store
+- Create store schema/structure
 
     ````typescript
     export type Id = string;
@@ -354,13 +354,36 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     }
     ```
 
-- Create store
+- Create store in `client\src\store\index.ts`
 
     ```typescript
     import logger from 'redux-logger';
-    import { createStore } from 'redux';
+    import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
     import storyReducer, { initialStoryState } from './Reducers/storyReducer';
     import userReducer, { initialUserState } from './Reducers/userReducer';
+
+    export type Id = string;
+
+    export interface StoryState {
+        Title: string;
+        IsVoteRevealed: boolean;
+    }
+
+    export interface UserData {
+        id: Id;
+        name: string;
+        vote: number | null;
+    }
+
+    export interface UserState {
+        currentUserId: Id;
+        users: Array<UserData>;
+    }
+
+    export interface StoreState {
+        story: StoryState;
+        users: UserState;
+    }
 
     const rootReducer = combineReducers({
         users: userReducer,
