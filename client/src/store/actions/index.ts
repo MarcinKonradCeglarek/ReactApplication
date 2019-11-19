@@ -1,5 +1,5 @@
 import { Requests, USER_VOTE, USER_RENAME, STORY_REVEAL, STORY_RESET, USER_CREATE, STORY_RENAME, USER_DELETE } from './types';
-import { Id } from '..';
+import { Id } from '../model';
 
 export function UserVoteRequest(id: Id, vote: number): Requests {
     return {

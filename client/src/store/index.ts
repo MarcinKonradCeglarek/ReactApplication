@@ -1,32 +1,11 @@
-import socketIO from 'socket.io-client';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import logger from 'redux-logger';
+import socketIO from 'socket.io-client';
 import storyReducer, { initialStoryState } from './reducers/storyReducer';
 import userReducer, { initialUserState } from './reducers/userReducer';
-import socketIoMiddleware from './middleware/socketsIoMiddleware';
-import logger from 'redux-logger';
+import socketIoMiddleware from './middleware/sockets.io-client';
+import { StoreState } from './model';
 
-export type Id = string;
-
-export interface StoryState {
-    Title: string;
-    IsVoteRevealed: boolean;
-}
-
-export interface UserData {
-    id: Id;
-    name: string;
-    vote: number | null;
-}
-
-export interface UserState {
-    currentUserId: Id;
-    users: Array<UserData>;
-}
-
-export interface StoreState {
-    story: StoryState;
-    users: UserState;
-}
 
 const rootReducer = combineReducers({
     story: storyReducer,

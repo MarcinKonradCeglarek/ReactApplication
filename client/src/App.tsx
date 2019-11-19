@@ -3,9 +3,10 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core/styles';
 import './App.css';
 import theme from './Theme';
-import CreateStore, { StoryState, UserState } from './store';
 import Dashboard from './containers/dashboard';
 import Deck from './containers/deck';
+import CreateStore from './store';
+import { StoryState, UserState } from './store/model';
 
 interface AppProps {
     story: StoryState;

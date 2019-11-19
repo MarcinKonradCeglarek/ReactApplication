@@ -1,4 +1,4 @@
-import { Requests } from '../actions/types';
+import { Requests } from 'src/store/actions/types';
 
 export default function(socket: SocketIOClient.Socket) {
     var channelName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'action';

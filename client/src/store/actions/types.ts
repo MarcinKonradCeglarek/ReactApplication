@@ -1,4 +1,4 @@
-import { Id, UserData, StoryState } from '..';
+import { UserData, Id, StoryState } from "../model";
 
 interface BroadcastableAction {
     isRequest: true;

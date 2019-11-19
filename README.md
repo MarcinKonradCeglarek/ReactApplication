@@ -633,6 +633,32 @@ We will not care about potential failures. All of our actions will be Requests (
         /* ... */;
     ```
 
+- Create socket.io-client middleware at `client\src\store\middleware\socketsIo.ts`
+
+    Based on https://github.com/czytelny/redux-socket.io-middleware/blob/master/dist/redux-socket.io-middleware.js
+
+    ```typescript
+    import { Requests } from '../actions/types';
+
+    export default function(socket: SocketIOClient.Socket) {
+        var channelName = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'action';
+
+        return function(store: any) {
+            socket.on(channelName, store.dispatch);
+
+            return function(next: any) {
+                return function(action: Requests) {
+                    if (action.isRequest) {
+                        socket.emit(channelName, action);
+                    }
+
+                    return next(action);
+                };
+            };
+        };
+    }
+    ```
+
 - Add socket.io-client middleware to store `client\src\store\index.ts`:
 
     ```typescript
