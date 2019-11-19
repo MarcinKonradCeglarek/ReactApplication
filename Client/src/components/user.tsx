@@ -4,7 +4,6 @@ import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import { orange, blue } from '@material-ui/core/colors';
 import classnames from 'classnames';
 import ErrorIcon from '@material-ui/icons/Error';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const styles = (theme: Theme) =>
     createStyles({

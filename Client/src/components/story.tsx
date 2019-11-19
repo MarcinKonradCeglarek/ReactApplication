@@ -1,8 +1,8 @@
 import React from 'react';
 import { Theme, Button, Grid } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
-import User from './User';
-import Result from './Result';
+import User from './user';
+import Result from './result';
 import { UserData, Id } from '../store';
 
 const styles = (theme: Theme) =>

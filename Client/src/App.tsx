@@ -4,8 +4,8 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import './App.css';
 import theme from './Theme';
 import CreateStore, { StoryState, UserState } from './store';
-import Dashboard from './container/dashboard';
-import Deck from './container/deck';
+import Dashboard from './containers/dashboard';
+import Deck from './containers/deck';
 
 interface AppProps {
     story: StoryState;
