@@ -392,7 +392,7 @@ https://stackoverflow.com/questions/35628774/how-to-update-single-value-inside-s
     export type AppState = ReturnType<typeof rootReducer>;
 
     export const initialState: StoreState = {
-        story: initialStoryState,
+        story: { Title: 'title', IsVoteRevealed: true },
         users: initialUserState,
     };
 
