@@ -1,5 +1,5 @@
 import { StoryState } from '..';
-import { STORY_REVEAL, STORY_RESET, STORY_RENAME, Responses, STORY_INIT } from '../Actions/types';
+import { STORY_REVEAL, STORY_RESET, STORY_RENAME, Responses, STORY_INIT } from '../actions/types';
 
 export const initialStoryState: StoryState = {
     Title: '(no title)',

@@ -1,11 +1,12 @@
 import React from 'react';
 import { storiesOf, addDecorator } from '@storybook/react';
 import { withState } from '@dump247/storybook-state';
-
-import Card from '../Components/Card';
-import Cards from '../Components/Cards';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, number } from '@storybook/addon-knobs';
+
+import Card from '../components/card';
+import Cards from '../components/cards';
+
 
 interface CardsProps {
     SelectedValue: number | null;

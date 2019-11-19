@@ -1,5 +1,5 @@
 import { UserState, UserData } from '..';
-import { USER_RENAME, USER_VOTE, USER_CREATE, STORY_RESET, USER_DELETE, Responses, USER_INIT } from '../Actions/types';
+import { USER_RENAME, USER_VOTE, USER_CREATE, STORY_RESET, USER_DELETE, Responses, USER_INIT } from '../actions/types';
 import update from 'immutability-helper';
 
 function uuidv4() {

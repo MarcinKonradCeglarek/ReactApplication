@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Result from 'src/Components/Result';
-import { UserData } from 'src/Store';
 import { boolean } from '@storybook/addon-knobs';
+import Result from 'src/components/result';
+import { UserData } from 'src/Store';
 
 const users: UserData[] = [
     { id: '1', name: '1', vote: null },

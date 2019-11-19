@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Story from '../Components/Story';
 import { withState } from '@dump247/storybook-state';
+import Story from '../components/story';
 
 storiesOf('Story', module).add(
     'with 2 users',

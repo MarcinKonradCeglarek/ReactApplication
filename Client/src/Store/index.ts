@@ -1,8 +1,8 @@
 import socketIO from 'socket.io-client';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import storyReducer, { initialStoryState } from './Reducers/storyReducer';
-import userReducer, { initialUserState } from './Reducers/userReducer';
-import socketIoMiddleware from './Middleware/SocketsIoMiddleware';
+import storyReducer, { initialStoryState } from './reducers/storyReducer';
+import userReducer, { initialUserState } from './reducers/userReducer';
+import socketIoMiddleware from './middleware/socketsIoMiddleware';
 import logger from 'redux-logger';
 
 export type Id = string;

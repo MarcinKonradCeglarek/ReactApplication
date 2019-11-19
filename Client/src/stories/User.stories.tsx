@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, optionsKnob, boolean } from '@storybook/addon-knobs';
-import User from '../Components/User';
 import { OptionsKnobOptions } from '@storybook/addon-knobs/dist/components/types';
+import User from '../components/user';
 
 interface UserProps {
     Vote: number | null;

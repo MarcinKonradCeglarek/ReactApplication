@@ -1,12 +1,11 @@
 import React from 'react';
-import './App.css';
-import Dashboard from './Container/Dashboard';
-import { ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from '@material-ui/core/styles';
+import './App.css';
 import theme from './Theme';
 import CreateStore, { StoryState, UserState } from './Store';
-import Deck from './Container/Deck';
-import { Grid } from '@material-ui/core';
+import Dashboard from './container/dashboard';
+import Deck from './container/deck';
 
 interface AppProps {
     story: StoryState;
