@@ -3,7 +3,7 @@ import { Theme, Button, Grid } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import User from './User';
 import Result from './Result';
-import { UserData, Id } from '../Store';
+import { UserData, Id } from '../store';
 
 const styles = (theme: Theme) =>
     createStyles({

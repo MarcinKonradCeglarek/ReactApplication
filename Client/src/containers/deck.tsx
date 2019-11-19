@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StoreState, UserData } from '../Store';
-import { UserVoteRequest, UserCreateRequest } from '../Store/actions';
+import { StoreState, UserData } from '../store';
+import { UserVoteRequest, UserCreateRequest } from '../store/actions';
 import Cards from '../components/cards';
 
 interface DeckContainerProps {

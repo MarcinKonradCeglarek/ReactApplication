@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StoreState } from '../Store';
+import { StoreState } from '../store';
 import Story, { StoryProps } from '../components/story';
-import { StoryRevealRequest, StoryResetRequest, UserRenameRequest, StoryRenameRequest } from '../Store/actions';
+import { StoryRevealRequest, StoryResetRequest, UserRenameRequest, StoryRenameRequest } from '../store/actions';
 import io from 'socket.io-client';
 
 interface DashboardProps extends StoryProps {
