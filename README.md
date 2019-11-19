@@ -511,7 +511,7 @@ npx express-generator
 npm install --save socket.io
 ```
 
-We will update app.js file:
+We will update app.js file using template: https://socket.io/docs/#Using-with-Express
 
 ```javascript
 var app = require("express")();
