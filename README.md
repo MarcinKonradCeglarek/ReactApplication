@@ -295,7 +295,6 @@ yarn add redux-actions @types/redux-actions
     export function UserVoteRequest(id: Id, vote: number): Actions {
         return {
             type: USER_VOTE,
-            isRequest: true,
             id: id,
             vote: vote,
         };
@@ -307,7 +306,7 @@ yarn add redux-actions @types/redux-actions
   - UserReducer
 
     ```typescript
-    export function userReducer(state = initialUserState, action: Responses): UserState {
+    export function userReducer(state = initialUserState, action: Actions): UserState {
         switch (action.type) {
             ...
             case USER_VOTE:
@@ -338,6 +337,10 @@ yarn add redux-actions @types/redux-actions
     import storyReducer, { initialStoryState } from './Reducers/storyReducer';
     import userReducer, { initialUserState } from './Reducers/userReducer';
 
+    const rootReducer = combineReducers({
+        users: userReducer,
+    });
+
     export type AppState = ReturnType<typeof rootReducer>;
 
     export const initialState: StoreState = {
@@ -348,7 +351,88 @@ yarn add redux-actions @types/redux-actions
     export default function CreateStore() {
         return createStore(rootReducer, initialState);
     }
+    ```
 
+- Create connected component Deck in `client\src\components\deck`
+
+    ```typescript
+    import React, { Component } from 'react';
+    import { connect } from 'react-redux';
+    import { StoreState, UserData } from '../Store';
+    import { UserVoteRequest, UserCreateRequest } from '../Store/Actions';
+    import Cards from '../Components/Cards';
+
+    interface DeckContainerProps {
+        currentUserId: string;
+        currentUser: UserData | undefined;
+        SelectedValue: number | null;
+    }
+
+    interface DeckContainerDispatch {
+        VoteAction: typeof UserVoteRequest;
+        CreateUserAction: typeof UserCreateRequest;
+    }
+
+    class DeckContainer extends Component<DeckContainerProps & DeckContainerDispatch> {
+        onSelect = (newValue: number) => {
+            this.props.VoteAction(this.props.currentUserId, newValue);
+        };
+
+        componentDidMount() {
+            if (this.props.currentUser === undefined) {
+                this.props.CreateUserAction(this.props.currentUserId, this.props.currentUserId.substr(0, 8));
+            }
+        }
+
+        render() {
+            return <Cards SelectedValue={this.props.SelectedValue} onSelect={this.onSelect}></Cards>;
+        }
+    }
+
+    function mapStateToProps(state: StoreState): DeckContainerProps {
+        const currentUserId = state.users.currentUserId;
+        const currentUser = state.users.users.find(u => u.id === currentUserId);
+
+        return {
+            currentUserId: currentUserId,
+            currentUser: currentUser,
+            SelectedValue: currentUser !== undefined ? currentUser.vote : null,
+        };
+    }
+
+    const mapDispatchToProps: DeckContainerDispatch = {
+        VoteAction: UserVoteRequest,
+        CreateUserAction: UserCreateRequest,
+    };
+
+    export default connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(DeckContainer);
+    ```
+
+- Inject store using redux Provider into App
+
+    ```typescript
+    import { Provider } from 'react-redux';
+    import theme from './Theme';
+    import CreateStore, { StoryState, UserState } from './Store';
+    import Deck from './Container/Deck';
+    import { Grid } from '@material-ui/core';
+
+    const store = CreateStore();
+
+    class App extends React.Component {
+        render() {
+            return (
+                    <Provider store={store}>
+                        <div className="App">
+                            <Deck />
+                        </div>
+                    </Provider>
+            );
+        }
+    }
     ```
 
 ### redux-logger
