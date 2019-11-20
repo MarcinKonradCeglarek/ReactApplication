@@ -1,4 +1,12 @@
-import { USER_RENAME, USER_VOTE, USER_CREATE, STORY_RESET, USER_DELETE, Responses, USER_INIT } from '../actions/types';
+import {
+    Responses,
+    USER_INIT_RESPONSE,
+    USER_RENAME_RESPONSE,
+    USER_VOTE_RESPONSE,
+    USER_CREATE_RESPONSE,
+    USER_DELETE_RESPONSE,
+    STORY_RESET_RESPONSE,
+} from '../actions/types';
 import update from 'immutability-helper';
 import { UserState, UserData } from '../model';
 
@@ -17,10 +25,10 @@ export const initialUserState: UserState = {
 
 export function userReducer(state = initialUserState, action: Responses): UserState {
     switch (action.type) {
-        case USER_INIT:
+        case USER_INIT_RESPONSE:
             const existingUsers: UserData[] = update(state.users, { $push: action.users });
             return { ...state, users: existingUsers };
-        case USER_RENAME:
+        case USER_RENAME_RESPONSE:
             const newState = update(state, {
                 users: {
                     $apply: (users: UserData[]) =>
@@ -40,7 +48,7 @@ export function userReducer(state = initialUserState, action: Responses): UserSt
             });
             return newState;
 
-        case USER_VOTE:
+        case USER_VOTE_RESPONSE:
             if (!state.users.find(u => u.id === action.id)) {
                 return state;
             }
@@ -52,7 +60,7 @@ export function userReducer(state = initialUserState, action: Responses): UserSt
             });
             return { ...state, users: updatedUsers };
 
-        case USER_CREATE:
+        case USER_CREATE_RESPONSE:
             if (state.users.find(u => u.id === action.id)) {
                 return state;
             }
@@ -62,7 +70,7 @@ export function userReducer(state = initialUserState, action: Responses): UserSt
             const newState2: UserState = { ...state, users: newUsers };
             return newState2;
 
-        case USER_DELETE:
+        case USER_DELETE_RESPONSE:
             if (!state.users.find(u => u.id === action.id)) {
                 return state;
             }
@@ -72,7 +80,7 @@ export function userReducer(state = initialUserState, action: Responses): UserSt
             const newState3: UserState = { ...state, users: usersWithoutUserToRemove };
             return newState3;
 
-        case STORY_RESET:
+        case STORY_RESET_RESPONSE:
             const usersWithoutVotes: UserData[] = state.users.map(u => {
                 return { id: u.id, name: u.name, vote: null };
             });

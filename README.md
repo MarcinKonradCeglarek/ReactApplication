@@ -598,7 +598,7 @@ We will not care about potential failures. All of our actions will be Requests (
 - Add socket.io-client package:
 
     ```javascript
-    yarn add socket.io-client
+    yarn add socket.io-client @types/socket.io-client
     ```
 
 - Modify all Request actions to extend also BroadcastableAction in `client\src\store\actions\types.ts`

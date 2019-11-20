@@ -1,4 +1,4 @@
-import { STORY_REVEAL, STORY_RESET, STORY_RENAME, Responses, STORY_INIT } from '../actions/types';
+import { Responses, STORY_INIT_RESPONSE, STORY_REVEAL_RESPONSE, STORY_RESET_RESPONSE, STORY_RENAME_RESPONSE } from '../actions/types';
 import { StoryState } from '../model';
 
 export const initialStoryState: StoryState = {
@@ -8,19 +8,19 @@ export const initialStoryState: StoryState = {
 
 export function storyReducer(state = initialStoryState, action: Responses): StoryState {
     switch (action.type) {
-        case STORY_INIT:
+        case STORY_INIT_RESPONSE:
             return action.story;
-        case STORY_REVEAL:
+        case STORY_REVEAL_RESPONSE:
             return {
                 ...state,
                 IsVoteRevealed: action.isRevealed,
             };
-        case STORY_RESET:
+        case STORY_RESET_RESPONSE:
             return {
                 Title: '',
                 IsVoteRevealed: false,
             };
-        case STORY_RENAME:
+        case STORY_RENAME_RESPONSE:
             return {
                 ...state,
                 Title: action.newTitle,

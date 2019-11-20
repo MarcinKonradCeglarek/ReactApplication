@@ -1,91 +1,113 @@
-import { UserData, Id, StoryState } from "../model";
+import { UserData, Id, StoryState } from '../model';
 
-interface BroadcastableAction {
-    isRequest: true;
-}
-
-export const USER_INIT = 'USER_INIT';
+export const USER_INIT_RESPONSE = 'USER_INIT_RESPONSE';
 interface UserListResponse {
-    type: typeof USER_INIT;
+    type: typeof USER_INIT_RESPONSE;
     users: UserData[];
+    isRequest: false;
 }
 
 // *****
 export const USER_VOTE = 'USER_VOTE';
-interface UserVoteAction {
+interface UserVoteRequest {
     type: typeof USER_VOTE;
     id: Id;
     vote: number;
 }
-interface UserVoteRequest extends UserVoteAction, BroadcastableAction {}
-interface UserVoteResponse extends UserVoteAction {}
+
+export const USER_VOTE_RESPONSE = 'USER_VOTE_RESPONSE';
+interface UserVoteResponse {
+    type: typeof USER_VOTE_RESPONSE;
+    id: Id;
+    vote: number;
+}
 
 // *****
 export const USER_RENAME = 'USER_RENAME';
-interface UserRenameAction {
+interface UserRenameRequest {
     type: typeof USER_RENAME;
     id: Id;
     newName: string;
 }
 
-interface UserRenameRequest extends UserRenameAction, BroadcastableAction {}
-interface UserRenameResponse extends UserRenameAction {}
+export const USER_RENAME_RESPONSE = 'USER_RENAME_RESPONSE';
+interface UserRenameResponse {
+    type: typeof USER_RENAME_RESPONSE;
+    id: Id;
+    newName: string;
+}
 
 // *****
 export const USER_CREATE = 'USER_CREATE';
-interface UserCreateAction {
+interface UserCreateRequest {
     type: typeof USER_CREATE;
     id: Id;
     name: string;
 }
 
-interface UserCreateRequest extends UserCreateAction, BroadcastableAction {}
-interface UserCreateResponse extends UserCreateAction {}
+export const USER_CREATE_RESPONSE = 'USER_CREATE_RESPONSE';
+interface UserCreateResponse {
+    type: typeof USER_CREATE_RESPONSE;
+    id: Id;
+    name: string;
+}
 
 // *****
 export const USER_DELETE = 'USER_DELETE';
-interface UserDeleteAction {
+interface UserDeleteRequest {
     type: typeof USER_DELETE;
     id: Id;
 }
 
-interface UserDeleteRequest extends UserDeleteAction, BroadcastableAction {}
-interface UserDeleteResponse extends UserDeleteAction {}
+export const USER_DELETE_RESPONSE = 'USER_DELETE_RESPONSE';
+interface UserDeleteResponse {
+    type: typeof USER_DELETE_RESPONSE;
+    id: Id;
+}
 
-export const STORY_INIT = 'STORY_INIT';
+// *****
+export const STORY_INIT_RESPONSE = 'STORY_INIT_RESPONSE';
 interface StoryInitResponse {
-    type: typeof STORY_INIT;
+    type: typeof STORY_INIT_RESPONSE;
     story: StoryState;
 }
 
 // *****
 export const STORY_REVEAL = 'STORY_REVEAL';
-interface StoryRevealAction {
+interface StoryRevealRequest {
     type: typeof STORY_REVEAL;
     isRevealed: boolean;
 }
 
-interface StoryRevealRequest extends StoryRevealAction, BroadcastableAction {}
-interface StoryRevealResponse extends StoryRevealAction {}
+export const STORY_REVEAL_RESPONSE = 'STORY_REVEAL_RESPONSE';
+interface StoryRevealResponse {
+    type: typeof STORY_REVEAL_RESPONSE;
+    isRevealed: boolean;
+}
 
 // *****
 export const STORY_RESET = 'STORY_RESET';
-interface StoryResetAction {
+interface StoryResetRequest {
     type: typeof STORY_RESET;
 }
 
-interface StoryResetRequest extends StoryResetAction, BroadcastableAction {}
-interface StoryResetResponse extends StoryResetAction {}
+export const STORY_RESET_RESPONSE = 'STORY_RESET_RESPONSE';
+interface StoryResetResponse {
+    type: typeof STORY_RESET_RESPONSE;
+}
 
 // *****
 export const STORY_RENAME = 'STORY_RENAME';
-interface StoryRenameAction {
+interface StoryRenameRequest {
     type: typeof STORY_RENAME;
     newTitle: string;
 }
 
-interface StoryRenameRequest extends StoryRenameAction, BroadcastableAction {}
-interface StoryRenameResponse extends StoryRenameAction {}
+export const STORY_RENAME_RESPONSE = 'STORY_RENAME_RESPONSE';
+interface StoryRenameResponse {
+    type: typeof STORY_RENAME_RESPONSE;
+    newTitle: string;
+}
 
 // *****
 export type Requests =
