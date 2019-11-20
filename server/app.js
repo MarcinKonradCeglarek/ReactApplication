@@ -49,13 +49,13 @@ function updateServerState(payload) {
 }
 io.on('connection', function(socket) {
     console.log('Connected: ' + socket.client.conn.id + '. Sending ' + users.length + ' users and story');
-    socket.emit('action', { type: 'USER_INIT', users: users });
-    socket.emit('action', { type: 'STORY_INIT', story: story });
+    socket.emit('action', { type: 'USER_INIT_RESPONSE', users: users });
+    socket.emit('action', { type: 'STORY_INIT_RESPONSE', story: story });
     socket.on('action', function(payload) {
         updateServerState(payload);
 
         // deleting isRequest property from incoming action before forwarding
-        delete payload.isRequest;
+        payload.type += '_RESPONSE';
         console.log(payload);
 
         // broadcast to everyone but client
