@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 import Result from 'src/components/result';
-import { UserData } from 'src/store';
+import { UserData } from 'src/store/model';
 
 const users: UserData[] = [
     { id: '1', name: '1', vote: null },
