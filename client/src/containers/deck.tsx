@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StoreState, UserData } from '../store';
 import { UserVoteRequest, UserCreateRequest } from '../store/actions';
 import Cards from '../components/cards';
+import { StoreState, UserData } from 'src/store/model';
 
 interface DeckContainerProps {
     currentUserId: string;
@@ -47,7 +47,4 @@ const mapDispatchToProps: DeckContainerDispatch = {
     CreateUserAction: UserCreateRequest,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(DeckContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DeckContainer);

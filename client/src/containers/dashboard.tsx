@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StoreState } from '../store';
 import Story, { StoryProps } from '../components/story';
 import { StoryRevealRequest, StoryResetRequest, UserRenameRequest, StoryRenameRequest } from '../store/actions';
 import io from 'socket.io-client';
+import { StoreState } from 'src/store/model';
 
 interface DashboardProps extends StoryProps {
     CurrentUserId: string;
@@ -64,7 +64,4 @@ const mapDispatchToProps: DashboardDispatch = {
     UserRename: UserRenameRequest,
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

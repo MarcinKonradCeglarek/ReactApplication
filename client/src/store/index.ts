@@ -6,7 +6,6 @@ import userReducer, { initialUserState } from './reducers/userReducer';
 import socketIoMiddleware from './middleware/sockets.io-client';
 import { StoreState } from './model';
 
-
 const rootReducer = combineReducers({
     story: storyReducer,
     users: userReducer,

@@ -1,9 +1,9 @@
 import React from 'react';
-import { UserData } from 'src/store';
 import { Theme } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import { UserData } from 'src/store/model';
 
 const styles = (theme: Theme) =>
     createStyles({
