@@ -33,7 +33,7 @@ export interface StoryProps {
     IsVoteRevealed: boolean;
     Users: UserData[];
     CurrentUsername: string;
-    CurrentUserId: Id;
+    CurrentUserId: Id | null;
 }
 
 export interface StoryDispatch {

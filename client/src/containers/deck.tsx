@@ -5,7 +5,7 @@ import Cards from '../components/cards';
 import { StoreState, UserData } from 'src/store/model';
 
 interface DeckContainerProps {
-    currentUserId: string;
+    currentUserId: string | null;
     currentUser: UserData | undefined;
     SelectedValue: number | null;
 }
@@ -17,12 +17,14 @@ interface DeckContainerDispatch {
 
 class DeckContainer extends Component<DeckContainerProps & DeckContainerDispatch> {
     onSelect = (newValue: number) => {
-        this.props.VoteAction(this.props.currentUserId, newValue);
+        if (this.props.currentUserId != null) {
+            this.props.VoteAction(this.props.currentUserId, newValue);
+        }
     };
 
     componentDidMount() {
         if (this.props.currentUser === undefined) {
-            this.props.CreateUserAction(this.props.currentUserId, this.props.currentUserId.substr(0, 8));
+            this.props.CreateUserAction('Bob');
         }
     }
 

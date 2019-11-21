@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 import { StoreState } from 'src/store/model';
 
 interface DashboardProps extends StoryProps {
-    CurrentUserId: string;
+    CurrentUserId: string | null;
 }
 
 interface DashboardDispatch {
@@ -17,7 +17,9 @@ interface DashboardDispatch {
 }
 class Dashboard extends Component<DashboardProps & DashboardDispatch> {
     userRename = (newName: string) => {
-        this.props.UserRename(this.props.CurrentUserId, newName);
+        if (this.props.CurrentUserId !== null) {
+            this.props.UserRename(this.props.CurrentUserId, newName);
+        }
     };
 
     componentDidMount() {

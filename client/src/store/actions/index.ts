@@ -17,10 +17,9 @@ export function UserRenameRequest(id: Id, newName: string): Requests {
     };
 }
 
-export function UserCreateRequest(id: Id, name: string): Requests {
+export function UserCreateRequest(name: string): Requests {
     return {
         type: USER_CREATE,
-        id: id,
         name: name,
     };
 }

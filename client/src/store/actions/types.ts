@@ -41,7 +41,6 @@ interface UserRenameResponse {
 export const USER_CREATE = 'USER_CREATE';
 interface UserCreateRequest {
     type: typeof USER_CREATE;
-    id: Id;
     name: string;
 }
 

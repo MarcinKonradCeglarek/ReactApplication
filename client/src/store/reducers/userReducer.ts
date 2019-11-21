@@ -8,86 +8,87 @@ import {
     STORY_RESET_RESPONSE,
 } from '../actions/types';
 import update from 'immutability-helper';
-import { UserState, UserData } from '../model';
-
-function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (Math.random() * 16) | 0,
-            v = c === 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    });
-}
+import { UserState, UserData, Id } from '../model';
 
 export const initialUserState: UserState = {
-    currentUserId: uuidv4(),
+    currentUserId: null,
     users: [],
 };
 
-export function userReducer(state = initialUserState, action: Responses): UserState {
-    switch (action.type) {
-        case USER_INIT_RESPONSE:
-            const existingUsers: UserData[] = update(state.users, { $push: action.users });
+function userExists(state: UserState, id: Id): boolean {
+    let userIndex = state.users.findIndex(u => u.id === id);
+    return userIndex !== -1;
+}
+
+export function userReducer(state = initialUserState, response: Responses): UserState {
+    switch (response.type) {
+        case USER_INIT_RESPONSE: {
+            const existingUsers: UserData[] = update(state.users, { $push: response.users });
             return { ...state, users: existingUsers };
-        case USER_RENAME_RESPONSE:
-            const newState = update(state, {
-                users: {
-                    $apply: (users: UserData[]) =>
-                        users.map(user => {
-                            if (user.id !== action.id) {
-                                return user;
-                            }
+        }
 
-                            const updatedUser: UserData = {
-                                ...user,
-                                name: action.newName,
-                            };
+        case USER_RENAME_RESPONSE: {
+            let userIndex = state.users.findIndex(u => u.id === response.id);
 
-                            return updatedUser;
-                        }),
-                },
-            });
-            return newState;
-
-        case USER_VOTE_RESPONSE:
-            if (!state.users.find(u => u.id === action.id)) {
+            if (userIndex === -1) {
                 return state;
             }
 
-            let userVoteIndex = state.users.findIndex(u => u.id === action.id);
-            const userWithVote: UserData = update(state.users[userVoteIndex], { vote: { $set: action.vote } });
+            const updatedUser: UserData = update(state.users[userIndex], { name: { $set: response.newName } });
             const updatedUsers: UserData[] = update(state.users, {
-                $splice: [[userVoteIndex, 1, userWithVote]],
+                $splice: [[userIndex, 1, updatedUser]],
             });
             return { ...state, users: updatedUsers };
+        }
 
-        case USER_CREATE_RESPONSE:
-            if (state.users.find(u => u.id === action.id)) {
+        case USER_VOTE_RESPONSE: {
+            let userIndex = state.users.findIndex(u => u.id === response.id);
+
+            if (userIndex === -1) {
                 return state;
             }
 
-            const newUser: UserData = { id: action.id, name: action.name, vote: null };
+            const updatedUser: UserData = update(state.users[userIndex], { vote: { $set: response.vote } });
+            const updatedUsers: UserData[] = update(state.users, {
+                $splice: [[userIndex, 1, updatedUser]],
+            });
+            return { ...state, users: updatedUsers };
+        }
+
+        case USER_CREATE_RESPONSE: {
+            if (userExists(state, response.id)) {
+                return state;
+            }
+
+            const newUser: UserData = { id: response.id, name: response.name, vote: null };
             const newUsers = update(state.users, { $push: [newUser] });
-            const newState2: UserState = { ...state, users: newUsers };
-            return newState2;
 
-        case USER_DELETE_RESPONSE:
-            if (!state.users.find(u => u.id === action.id)) {
+            if (state.currentUserId === null) {
+                return { ...state, currentUserId: response.id, users: newUsers };
+            } else {
+                return { ...state, users: newUsers };
+            }
+        }
+
+        case USER_DELETE_RESPONSE: {
+            let userIndex = state.users.findIndex(u => u.id === response.id);
+
+            if (userIndex === -1) {
                 return state;
             }
 
-            let userToRemoveIndex = state.users.findIndex(u => u.id === action.id);
-            const usersWithoutUserToRemove: UserData[] = update(state.users, { $splice: [[userToRemoveIndex, 1]] });
-            const newState3: UserState = { ...state, users: usersWithoutUserToRemove };
-            return newState3;
+            const updatedUsers: UserData[] = update(state.users, { $splice: [[userIndex, 1]] });
+            return { ...state, users: updatedUsers };
+        }
 
-        case STORY_RESET_RESPONSE:
-            const usersWithoutVotes: UserData[] = state.users.map(u => {
+        case STORY_RESET_RESPONSE: {
+            const updatedUsers: UserData[] = state.users.map(u => {
                 return { id: u.id, name: u.name, vote: null };
             });
-            return {
-                ...state,
-                users: usersWithoutVotes,
-            };
+
+            return { ...state, users: updatedUsers };
+        }
+
         default:
             return state;
     }

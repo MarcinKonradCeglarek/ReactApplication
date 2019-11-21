@@ -12,7 +12,7 @@ export interface UserData {
 }
 
 export interface UserState {
-    currentUserId: Id;
+    currentUserId: Id | null;
     users: Array<UserData>;
 }
 
