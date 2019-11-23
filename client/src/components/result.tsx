@@ -1,7 +1,6 @@
 import React from 'react';
 import { Theme } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { UserData } from 'src/store/model';
 
@@ -10,13 +9,13 @@ const styles = (theme: Theme) =>
         wrapper: {
             display: 'flex',
             justifyContent: 'center',
-            backgroundColor: red[900],
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
             width: '100px',
             border: '3px solid white',
             borderRadius: '5px',
         },
         result: {
-            color: theme.palette.common.white,
             fontSize: '1.5rem',
         },
     });
@@ -35,9 +34,7 @@ class Result extends React.PureComponent<ResultProps & WithStyles<typeof styles,
 
         return (
             <div className={classes.wrapper}>
-                <div>
-                    <h3 className={classes.result}>{result}</h3>
-                </div>
+                <h3 className={classes.result}>{result}</h3>
             </div>
         );
     }

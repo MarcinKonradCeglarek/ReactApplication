@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 import { Theme } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -10,22 +9,25 @@ const styles = (theme: Theme) =>
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            color: theme.palette.common.white,
-            backgroundColor: purple[500],
-            border: '8px solid ' + theme.palette.common.white,
+            color: theme.palette.primary.contrastText,
+            borderWidth: theme.spacing(1),
+            borderStyle: 'solid',
+            borderColor: theme.palette.primary.contrastText,
             borderRadius: theme.shape.borderRadius,
             cursor: 'pointer',
-            margin: '5px',
+            margin: theme.spacing(1),
             transition: 'all 0.3s',
         },
         normal: {
             width: '150px',
             height: '200px',
+            backgroundColor: theme.palette.primary.main,
         },
         selected: {
             marginTop: '-190px',
-            width: '175px',
-            height: '235px',
+            width: '150px',
+            height: '200px',
+            backgroundColor: theme.palette.secondary.main,
         },
         value: {
             fontSize: '6rem',

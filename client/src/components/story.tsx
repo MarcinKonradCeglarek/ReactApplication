@@ -17,7 +17,7 @@ const styles = (theme: Theme) =>
             display: 'flex',
         },
         button: {
-            margin: '8px',
+            margin: theme.spacing(1),
         },
         paper: {
             padding: theme.spacing(5),
@@ -86,16 +86,16 @@ class Story extends React.PureComponent<StoryProps & StoryDispatch & WithStyles<
 
                     <Grid item xs={8} md={3}>
                         <div className={classes.paper}>
-                            <Button className={classes.button} variant="contained" color="primary" onClick={this.renameStory}>
+                            <Button className={classes.button} variant="contained" color="secondary" onClick={this.renameStory}>
                                 Set title
                             </Button>
-                            <Button className={classes.button} variant="contained" color="primary" onClick={this.renameUser}>
+                            <Button className={classes.button} variant="contained" color="secondary" onClick={this.renameUser}>
                                 Change user
                             </Button>
-                            <Button className={classes.button} variant="contained" color="primary" onClick={this.props.StoryReveal}>
+                            <Button className={classes.button} variant="contained" color="secondary" onClick={this.props.StoryReveal}>
                                 Reveal
                             </Button>
-                            <Button className={classes.button} variant="contained" color="default" onClick={this.props.StoryReset}>
+                            <Button className={classes.button} variant="contained" color="primary" onClick={this.props.StoryReset}>
                                 Reset
                             </Button>
                         </div>

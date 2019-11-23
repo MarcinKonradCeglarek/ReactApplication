@@ -1,7 +1,6 @@
 import React from 'react';
 import { Theme } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
-import { orange, blue } from '@material-ui/core/colors';
 import classnames from 'classnames';
 import ErrorIcon from '@material-ui/icons/Error';
 
@@ -11,8 +10,8 @@ const styles = (theme: Theme) =>
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            color: theme.palette.common.white,
-            backgroundColor: blue[500],
+            color: theme.palette.primary.contrastText,
+            backgroundColor: theme.palette.primary.main,
             border: '2px solid ' + theme.palette.common.white,
             borderRadius: theme.shape.borderRadius,
             margin: '5px',
@@ -20,7 +19,7 @@ const styles = (theme: Theme) =>
             height: '50px',
         },
         myUser: {
-            backgroundColor: orange[500],
+            backgroundColor: theme.palette.secondary.main,
         },
     });
 
