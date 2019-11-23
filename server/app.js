@@ -19,18 +19,31 @@ function updateServerState(payload, clientId) {
     switch (payload.type) {
         case 'USER_CREATE':
             payload.id = clientId;
+            console.log(payload);
             users.push({ id: payload.id, name: payload.name, vote: null });
             break;
         case 'USER_DELETE':
             let deletedIndex = users.findIndex(u => u.id === payload.id);
+            if (deletedIndex === -1) {
+                return;
+            }
+
             users = users.splice(deletedIndex, 1);
             break;
         case 'USER_VOTE':
             let voteIndex = users.findIndex(u => u.id === payload.id);
+            if (voteIndex === -1) {
+                return;
+            }
+
             users[voteIndex].vote = payload.vote;
             break;
         case 'USER_RENAME':
             let renameIndex = users.findIndex(u => u.id === payload.id);
+            if (renameIndex === -1) {
+                return;
+            }
+
             users[renameIndex].name = payload.newName;
             break;
         case 'STORY_RENAME':
