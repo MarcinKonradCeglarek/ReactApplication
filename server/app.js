@@ -62,14 +62,20 @@ io.on('connection', function(socket) {
         const id = socket.client.conn.id;
         console.log('Disconnected: ' + id);
         let deletedIndex = users.findIndex(u => u.id === id);
-        users = users.splice(deletedIndex, 1);
-        socket.broadcast.emit('action', { type: 'USER_DELETE_RESPONSE', id: id });
+
+        if (deletedIndex !== -1) {
+            users = users.splice(deletedIndex, 1);
+            socket.broadcast.emit('action', { type: 'USER_DELETE_RESPONSE', id: id });
+        }
     });
 
     socket.on('action', function(payload) {
+        console.log('-------------------');
         console.log(payload);
 
         updateServerState(payload, socket.client.conn.id);
+        console.log(users);
+
         payload.type += '_RESPONSE';
 
         // broadcast to everyone but client
