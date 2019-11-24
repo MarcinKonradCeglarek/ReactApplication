@@ -67,18 +67,20 @@ function updateServerState(payload, clientId) {
 }
 
 io.on('connection', function(socket) {
-    console.log('Connected: ' + socket.client.conn.id + '. Sending ' + users.length + ' users and story');
+    const clientId = socket.client.conn.id;
+
+    console.log('Connected: ' + clientId + '. Sending ' + users.length + ' users and story');
     socket.emit('action', { type: 'USER_INIT_RESPONSE', users: users });
     socket.emit('action', { type: 'STORY_INIT_RESPONSE', story: story });
 
     socket.on('disconnect', function() {
-        const id = socket.client.conn.id;
-        console.log('Disconnected: ' + id);
-        let deletedIndex = users.findIndex(u => u.id === id);
+        
+        console.log('Disconnected: ' + clientId);
+        let deletedIndex = users.findIndex(u => u.id === clientId);
 
         if (deletedIndex !== -1) {
             users = users.splice(deletedIndex, 1);
-            socket.broadcast.emit('action', { type: 'USER_DELETE_RESPONSE', id: id });
+            socket.broadcast.emit('action', { type: 'USER_DELETE_RESPONSE', id: clientId });
         }
     });
 
@@ -86,7 +88,7 @@ io.on('connection', function(socket) {
         console.log('-------------------');
         console.log(payload);
 
-        updateServerState(payload, socket.client.conn.id);
+        updateServerState(payload, clientId);
         console.log(users);
 
         payload.type += '_RESPONSE';
